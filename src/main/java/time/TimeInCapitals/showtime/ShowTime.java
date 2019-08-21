@@ -21,7 +21,7 @@ public class ShowTime {
 		String localTime = localDateTime.format(timeFormat);
 		String localDate = localDateTime.format(dateFormat);
 		
-		return "Local Time: "+localTime+"\n Local date: "+localDate;
+		return "Local Time: "+localTime+"\nLocal date: "+localDate;
 	}
 
 }
