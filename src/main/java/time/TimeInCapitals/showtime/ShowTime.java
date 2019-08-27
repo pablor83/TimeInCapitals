@@ -13,24 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ShowTime {
-
-	@GetMapping("/")
+	
+	@GetMapping({"/", "/localtime", "/localtime/{timeOrDate}" })
 	@ResponseBody
-	public String getTimeDate() {
-
-		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("H:m:s");
-		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("d MM y");
-		LocalDateTime localDateTime = LocalDateTime.now();
-
-		String localTime = localDateTime.format(timeFormat);
-		String localDate = localDateTime.format(dateFormat);
-
-		return "Local Time: " + localTime + "\nLocal date: " + localDate;
-	}
-
-	@GetMapping({ "/gettime/{td}", "/gettime" })
-	@ResponseBody
-	public String getQueryParameter(@PathVariable(required = false) String td) {
+	public String getQueryParameter(@PathVariable(required = false) String timeOrDate) throws Exception {
 
 		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/y");
@@ -43,20 +29,13 @@ public class ShowTime {
 
 		String result = localTimeAndDate;
 
-		if (td != null) {
-
-			if (td.equals("time")) {
-
-				result = localTime;
-
-			} else if (td.equals("date")) {
-
-				result = localDate;
-
-			}
-		}
-
-		return result;
+		if(timeOrDate == null)
+			return localTimeAndDate;
+		else if (timeOrDate.equals("time"))
+			return localTime;
+		else if(timeOrDate.equals("date"))
+			return localDate;
+		else throw new Exception("Bad request");
 	}
 
 }
