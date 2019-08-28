@@ -10,28 +10,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class LocalTimeService {
+	
+	private LocalDateTime localDateTime = LocalDateTime.now();
+	
+	public String getTime() {
+		
+		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+		
+		String localTime = localDateTime.format(timeFormat);
+		
+		return localTime;
+		
+	}
+	
+	public String getDate() {
+		
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/y");
+		String localDate = localDateTime.format(dateFormat);
+		
+		return localDate;
+	}
 
 	
-	public String getTimeOrDate(String timeOrDate) throws Exception {
+	public String getTimeAndDate() {
+		
+		String localTimeAndDate = "Local Time: " + getTime() + "\nLocal date: " + getDate();
 
-		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
-		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/y");
-
-		LocalDateTime localDateTime = LocalDateTime.now();
-
-		String localTime = localDateTime.format(timeFormat);
-		String localDate = localDateTime.format(dateFormat);
-		String localTimeAndDate = "Local Time: " + localTime + "\nLocal date: " + localDate;
-
-		String result = localTimeAndDate;
-
-		if(timeOrDate == null)
-			return localTimeAndDate;
-		else if (timeOrDate.equals("time"))
-			return localTime;
-		else if(timeOrDate.equals("date"))
-			return localDate;
-		else throw new Exception("Bad request");
+		return localTimeAndDate;
 	}
 	
 }
