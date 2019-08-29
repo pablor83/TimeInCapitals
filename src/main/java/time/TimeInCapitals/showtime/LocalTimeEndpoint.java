@@ -16,10 +16,10 @@ public class LocalTimeEndpoint {
 
 	private LocalTimeService localTimeService = new LocalTimeService();
 
-	@GetMapping({"/localtime", "/localtime/{timeOrDate}"})
+	@GetMapping({ "/localtime", "/localtime/{timeOrDate}" })
 	@ResponseBody
 	public String get(@PathVariable(required = false) String timeOrDate) throws Exception {
-		System.out.println(timeOrDate);
+
 		if (timeOrDate == null) {
 			return localTimeService.getTimeAndDate();
 
