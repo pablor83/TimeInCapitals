@@ -14,21 +14,16 @@ public class LocalTimeService {
 	public String getTime() {
 
 		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
-
 		LocalDateTime localDateTime = LocalDateTime.now();
-
 		String localTime = localDateTime.format(timeFormat);
 
 		return localTime;
-
 	}
 
 	public String getDate() {
-		
+
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/y");
-		
 		LocalDateTime localDateTime = LocalDateTime.now();
-		
 		String localDate = localDateTime.format(dateFormat);
 
 		return localDate;
