@@ -33,25 +33,42 @@ public class LocalTimeEndpoint {
 		}
 
 	}
-	
-	@GetMapping("/europe/{capitalCity}")
+
+	@GetMapping("/america/{capitalCity}")
 	@ResponseBody
-	public String getCapitalsTime(@PathVariable String capitalCity) {
-		
-		String capitalsOfEurope = "Europe/"+changeTheFirstLetterToUppercase(capitalCity);
-		
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-		Instant instant = Instant.now();
-		ZonedDateTime zoneDataTime = instant.atZone(ZoneId.of(capitalsOfEurope));
-		return zoneDataTime.format(dateTimeFormatter);
-		
-	}
-	
-	public String changeTheFirstLetterToUppercase(String word) {
-		
-		StringBuilder stringBuilder = new StringBuilder();		
-		String wordAfterChange = (stringBuilder.append(word.substring(0, 1).toUpperCase()).append(word.substring(1))).toString();		
-		return wordAfterChange;
+	public String getCapitalsTimeAmerica(@PathVariable String capitalCity) throws Exception {
+
+		String capitalsOfEurope = "America/" + localTimeService.changeTheFirstLetterToUppercase(capitalCity);
+
+		try {
+			return localTimeService.getTimeInZone(capitalsOfEurope);
+		} catch (Exception e) {
+			throw new Exception("Bad request");
+		}
+
 	}
 
+	@GetMapping("/asia/{capitalCity}")
+	@ResponseBody
+	public String getCapitalsTimeAsia(@PathVariable String capitalCity) throws Exception {
+
+		String capitalsOfEurope = "Asia/" + localTimeService.changeTheFirstLetterToUppercase(capitalCity);
+
+		try {
+			return localTimeService.getTimeInZone(capitalsOfEurope);
+		} catch (Exception e) {
+			throw new Exception("Bad request");
+		}
+
+	}
+
+	@GetMapping("/europe/{capitalCity}")
+	@ResponseBody
+	public String getCapitalsTimeEurope(@PathVariable String capitalCity) {
+
+		String capitalsOfEurope = "Europe/" + localTimeService.changeTheFirstLetterToUppercase(capitalCity);
+
+		return localTimeService.getTimeInZone(capitalsOfEurope);
+
+	}
 }
