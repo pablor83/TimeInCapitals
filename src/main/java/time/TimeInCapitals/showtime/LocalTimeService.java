@@ -1,18 +1,25 @@
 package time.TimeInCapitals.showtime;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-@Controller
 public class LocalTimeService {
+
+	public LocalTimeService() {
+		getDataFromFile();
+		setSummerUTCForCapitals();
+	}
+
+	private String[] regexResults;
+	private HashMap<String, String> utcSummerCapitals = new HashMap<>();
 
 	public String getTime() {
 
@@ -23,12 +30,13 @@ public class LocalTimeService {
 		return localTime;
 	}
 
-	public String getTimeInZone(String regionAndCity) {
+	public String getTimeInZone(String capital) {
 
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 		Instant instant = Instant.now();
-		ZonedDateTime zoneDateTime = instant.atZone(ZoneId.of(regionAndCity));
-		return dateTimeFormatter.format(zoneDateTime);
+		ZoneOffset zoneOffset = ZoneOffset.of(utcSummerCapitals.get(capital));
+
+		return instant.atZone(ZoneId.ofOffset("UTC", zoneOffset)).format(dateTimeFormatter);
 	}
 
 	public String getDate() {
@@ -47,27 +55,40 @@ public class LocalTimeService {
 		return localTimeAndDate;
 	}
 
-	public String changeTheFirstLetterToUppercase(String word) {
+	public void getDataFromFile() {
 
-		String[] regexResults = word.split("_");
-
+		File file = new File("D:/java/europe_capitals.txt");
 		StringBuilder stringBuilder = new StringBuilder();
+		String dataFromFile = null;
 
-		if (regexResults.length == 1) {
+		try (BufferedReader buffer = new BufferedReader(new FileReader(file))) {
 
-			String wordAfterChange = (stringBuilder.append(word.substring(0, 1).toUpperCase())
-					.append(word.substring(1))).toString();
-			return wordAfterChange;
-		} else {
+			while (buffer.ready()) {
 
-			String wordAfterChange = (stringBuilder.append(regexResults[0].substring(0, 1).toUpperCase())
-					.append(regexResults[0].substring(1))).append("_")
-							.append(regexResults[1].substring(0, 1).toUpperCase()).append(regexResults[1].substring(1))
-							.toString();
+				stringBuilder.append(buffer.readLine()).append(" ");
+			}
 
-			return wordAfterChange;
+		} catch (IOException e1) {
+
+			e1.printStackTrace();
 		}
 
+		dataFromFile = stringBuilder.toString();
+		regexResults = dataFromFile.split(" ");
+
+	}
+
+	public boolean checkKey(String key) {
+
+		return utcSummerCapitals.containsKey(key);
+	}
+
+	public void setSummerUTCForCapitals() {
+
+		for (int i = 1; i < regexResults.length; i += 5) {
+
+			utcSummerCapitals.put(regexResults[i], regexResults[i + 1]);
+		}
 	}
 
 }
