@@ -1,25 +1,25 @@
 package time.TimeInCapitals.showtime;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import time.TimeInCapitals.config.TimeInCapitalsConfig;
+import time.TimeInCapitals.repository.CapitalsRepository;
+
+@Service
 public class LocalTimeService {
 
-	public LocalTimeService() {
-		getDataFromFile();
-		setSummerUTCForCapitals();
+	private CapitalsRepository capitalsRepository;
+	
+	public LocalTimeService(CapitalsRepository capitalsRepository) {
+		this.capitalsRepository = capitalsRepository;
 	}
-
-	private String[] regexResults;
-	private HashMap<String, String> utcSummerCapitals = new HashMap<>();
 
 	public String getTime() {
 
@@ -34,7 +34,7 @@ public class LocalTimeService {
 
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 		Instant instant = Instant.now();
-		ZoneOffset zoneOffset = ZoneOffset.of(utcSummerCapitals.get(capital));
+		ZoneOffset zoneOffset = ZoneOffset.of(capitalsRepository.getSummerUTC(capital));
 
 		return instant.atZone(ZoneId.ofOffset("UTC", zoneOffset)).format(dateTimeFormatter);
 	}
@@ -55,40 +55,9 @@ public class LocalTimeService {
 		return localTimeAndDate;
 	}
 
-	public void getDataFromFile() {
-
-		File file = new File("D:/java/europe_capitals.txt");
-		StringBuilder stringBuilder = new StringBuilder();
-		String dataFromFile = null;
-
-		try (BufferedReader buffer = new BufferedReader(new FileReader(file))) {
-
-			while (buffer.ready()) {
-
-				stringBuilder.append(buffer.readLine()).append(" ");
-			}
-
-		} catch (IOException e1) {
-
-			e1.printStackTrace();
-		}
-
-		dataFromFile = stringBuilder.toString();
-		regexResults = dataFromFile.split(" ");
-
-	}
-
-	public boolean checkKey(String key) {
-
-		return utcSummerCapitals.containsKey(key);
-	}
-
-	public void setSummerUTCForCapitals() {
-
-		for (int i = 1; i < regexResults.length; i += 5) {
-
-			utcSummerCapitals.put(regexResults[i], regexResults[i + 1]);
-		}
+	public boolean existsByKey(String key) {
+		
+		return capitalsRepository.existsByKey(key);
 	}
 
 }
