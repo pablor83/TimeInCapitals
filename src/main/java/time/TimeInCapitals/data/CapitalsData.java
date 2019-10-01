@@ -10,8 +10,12 @@ public class CapitalsData {
 		this.utcSummerCapitals = utcSummerCapitals;
 	}
 
-	public HashMap<String, String> getUtcSummerCapitals() {
-		return utcSummerCapitals;
+	public String getUtcSummerCapitals(String capital) {
+		return utcSummerCapitals.get(capital);
+	}
+	
+	public boolean existsByKey(String key) {		
+		return utcSummerCapitals.containsKey(key);
 	}
 
 }

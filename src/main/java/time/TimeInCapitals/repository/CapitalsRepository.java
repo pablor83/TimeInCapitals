@@ -8,7 +8,7 @@ import time.TimeInCapitals.data.CapitalsData;
 @Repository
 public class CapitalsRepository {
 	
-	CapitalsData capitalsData;
+	private CapitalsData capitalsData;
 	
 	@Autowired
 	public CapitalsRepository(CapitalsData capitalsData) {
@@ -16,12 +16,11 @@ public class CapitalsRepository {
 	}
 	
 	public String getSummerUTC(String capital) {
-		return capitalsData.getUtcSummerCapitals().get(capital);
+		return capitalsData.getUtcSummerCapitals(capital);
 	}
 	
-	public boolean existsByKey(String key) {
-		
-		return capitalsData.getUtcSummerCapitals().containsKey(key);
+	public boolean existsByKey(String key) {		
+		return capitalsData.existsByKey(key);
 	}
 
 }

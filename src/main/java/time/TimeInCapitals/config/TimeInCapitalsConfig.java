@@ -7,22 +7,27 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 
 import time.TimeInCapitals.data.CapitalsData;
 
 @Configuration
+@PropertySource("classpath:pathToTheEuropaFile.properties")
+//@ConfigurationProperties(prefix = "source")
 public class TimeInCapitalsConfig {
 
 	@Bean(name = "getCapitalsData")
-	public CapitalsData getDataFromFile() {
-
-		String[] regexResults;
+	public CapitalsData getDataFromFile(@Value("${source.pathToEurope}") String pathToEurope) {
+		
+		String[] dataFromFile;
 		StringBuilder stringBuilder = new StringBuilder();
 		HashMap<String, String> utcSummerCapitals = new HashMap<>();
-		File file = new File("europe_capitals.txt");
+		File file = new File(pathToEurope);
 
 		try (BufferedReader buffer = new BufferedReader(new FileReader(file))) {
 			while (buffer.ready()) {
@@ -33,10 +38,10 @@ public class TimeInCapitalsConfig {
 			e1.printStackTrace();
 		}
 
-		regexResults = stringBuilder.toString().split(" ");
+		dataFromFile = stringBuilder.toString().split(" ");
 
-		for (int i = 1; i < regexResults.length; i += 5) {
-			utcSummerCapitals.put(regexResults[i], regexResults[i + 1]);
+		for (int i = 1; i < dataFromFile.length; i += 5) {
+			utcSummerCapitals.put(dataFromFile[i], dataFromFile[i + 1]);
 		}
 
 		return new CapitalsData(utcSummerCapitals);

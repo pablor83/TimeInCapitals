@@ -11,11 +11,8 @@ import time.TimeInCapitals.data.CapitalsData;
 public class TimeInCapitalsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TimeInCapitalsApplication.class, args);
-		
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(TimeInCapitalsConfig.class);
-		
+		SpringApplication.run(TimeInCapitalsApplication.class, args);		
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(TimeInCapitalsConfig.class);		
 		CapitalsData timeInCapitalsConfig = (CapitalsData) context.getBean("getCapitalsData");
 	}
-
 }

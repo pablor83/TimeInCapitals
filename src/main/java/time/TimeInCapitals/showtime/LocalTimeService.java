@@ -55,9 +55,7 @@ public class LocalTimeService {
 		return localTimeAndDate;
 	}
 
-	public boolean existsByKey(String key) {
-		
+	public boolean existsByKey(String key) {		
 		return capitalsRepository.existsByKey(key);
 	}
-
 }
