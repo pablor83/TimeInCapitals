@@ -1,49 +1,55 @@
 package time.TimeInCapitals.config;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Repository;
 
 import time.TimeInCapitals.data.CapitalsData;
+import time.TimeInCapitals.data.EuropeCapitalsUTC;
 
 @Configuration
 @PropertySource("classpath:pathToTheEuropaFile.properties")
 //@ConfigurationProperties(prefix = "source")
 public class TimeInCapitalsConfig {
 
+	private final int country = 0;
+	private final int capital = 1;
+	private final int summerTime = 2;
+	private final int winterTime = 3;
+	private final int isTimeChange = 4;
+
 	@Bean(name = "getCapitalsData")
 	public CapitalsData getDataFromFile(@Value("${source.pathToEurope}") String pathToEurope) {
-		
-		String[] dataFromFile;
-		StringBuilder stringBuilder = new StringBuilder();
-		HashMap<String, String> utcSummerCapitals = new HashMap<>();
-		File file = new File(pathToEurope);
 
-		try (BufferedReader buffer = new BufferedReader(new FileReader(file))) {
-			while (buffer.ready()) {
-				stringBuilder.append(buffer.readLine()).append(" ");
-			}
+		List<String> textFromFile = null;
+		Map<String, EuropeCapitalsUTC> europeUTC = new HashMap<>();
 
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		try {
+			textFromFile = Files.readAllLines(Path.of(pathToEurope));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
-		dataFromFile = stringBuilder.toString().split(" ");
+		europeUTC = textFromFile.stream().map(this::getUTCForEuropeCapitals)
+				.collect(Collectors.toMap(EuropeCapitalsUTC::getCapital, europeCapitalsUTC -> europeCapitalsUTC));
 
-		for (int i = 1; i < dataFromFile.length; i += 5) {
-			utcSummerCapitals.put(dataFromFile[i], dataFromFile[i + 1]);
-		}
+		return new CapitalsData(europeUTC);
+	}
 
-		return new CapitalsData(utcSummerCapitals);
+	private EuropeCapitalsUTC getUTCForEuropeCapitals(String dataLines) {
+
+		String[] dataFromFile = dataLines.split(" ");
+
+		return new EuropeCapitalsUTC(dataFromFile[country], dataFromFile[capital], dataFromFile[summerTime],
+				dataFromFile[winterTime], dataFromFile[isTimeChange]);
 	}
 }

@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class LocalTimeEndpoint {	
-	
+public class LocalTimeEndpoint {
+
 	private LocalTimeService localTimeService;
-	
+
 	@Autowired
 	public LocalTimeEndpoint(LocalTimeService localTimeService) {
 		this.localTimeService = localTimeService;
@@ -40,10 +40,9 @@ public class LocalTimeEndpoint {
 	public String getCapitalsTime(@PathVariable String capitalCity) throws Exception {
 
 		if (localTimeService.existsByKey(capitalCity)) {
-			return localTimeService.getTimeInZone(capitalCity);
+			return localTimeService.getTimeForEuropeCapital(capitalCity);
 		} else {
-			throw new IllegalArgumentException("Bad request. Incorrect capital name");			
+			throw new IllegalArgumentException("Bad request. Incorrect capital name");
 		}
-
 	}
 }

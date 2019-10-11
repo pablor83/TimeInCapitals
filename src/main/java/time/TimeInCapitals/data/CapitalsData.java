@@ -1,21 +1,21 @@
 package time.TimeInCapitals.data;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class CapitalsData {
-	
-	private HashMap<String, String> utcSummerCapitals;
-	
-	public CapitalsData(HashMap<String, String> utcSummerCapitals) {
-		this.utcSummerCapitals = utcSummerCapitals;
+
+	private Map<String, EuropeCapitalsUTC> europeUTC;
+
+	public CapitalsData(Map<String, EuropeCapitalsUTC> europeUTC) {
+		this.europeUTC = europeUTC;
 	}
 
-	public String getUtcSummerCapitals(String capital) {
-		return utcSummerCapitals.get(capital);
+	public EuropeCapitalsUTC getEuropeDataUTC(String capital) {
+		return europeUTC.get(capital);
 	}
-	
-	public boolean existsByKey(String key) {		
-		return utcSummerCapitals.containsKey(key);
+
+	public boolean existsByKey(String key) {
+		return europeUTC.containsKey(key);
 	}
 
 }
