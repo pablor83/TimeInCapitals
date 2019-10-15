@@ -1,20 +1,20 @@
 package time.TimeInCapitals.showtime;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class LocalTimeEndpoint {
 
-	private LocalTimeService localTimeService = new LocalTimeService();
+	private LocalTimeService localTimeService;
+
+	@Autowired
+	public LocalTimeEndpoint(LocalTimeService localTimeService) {
+		this.localTimeService = localTimeService;
+	}
 
 	@GetMapping({ "/localtime", "/localtime/{timeOrDate}" })
 	@ResponseBody
@@ -30,9 +30,19 @@ public class LocalTimeEndpoint {
 			return localTimeService.getDate();
 
 		} else {
-			throw new Exception("Bad request");
+			throw new IllegalArgumentException("Bad request");
 		}
 
 	}
 
+	@GetMapping("/europe/{capitalCity}")
+	@ResponseBody
+	public String getCapitalsTime(@PathVariable String capitalCity) throws Exception {
+
+		if (localTimeService.existsByKey(capitalCity)) {
+			return localTimeService.getTimeForEuropeCapital(capitalCity);
+		} else {
+			throw new IllegalArgumentException("Bad request. Incorrect capital name");
+		}
+	}
 }
