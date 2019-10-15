@@ -48,7 +48,7 @@ public class LocalTimeService {
 		boolean isBeforeWinterZone = localDateTime.isBefore(LocalDateTime.of(endOfSummerZone, LocalTime.of(02, 59)));
 		boolean isBeforeSummerZone = localDateTime.isBefore(LocalDateTime.of(endOfWinterZone, LocalTime.of(01, 59)));
 
-		if (capitalsRepository.isTimeChangeForEurope(capital).equals("yes") && isBeforeWinterZone
+		if (capitalsRepository.isTimeChangedForEurope(capital) && isBeforeWinterZone
 				&& !isBeforeSummerZone) {
 			ZoneOffset zoneOffset = ZoneOffset.of(capitalsRepository.getEuropeSummerUTC(capital));
 			return instant.atZone(ZoneId.ofOffset("UTC", zoneOffset)).format(dateTimeFormatter);

@@ -15,8 +15,8 @@ public class CapitalsRepository {
 		this.capitalsData = capitalsData;
 	}
 
-	public String isTimeChangeForEurope(String capital) {
-		return capitalsData.getEuropeDataUTC(capital).getIsTimeChange();
+	public boolean isTimeChangedForEurope(String capital) {
+		return capitalsData.getEuropeDataUTC(capital).isTimeChanged();
 	}
 
 	public String getEuropeSummerUTC(String capital) {
@@ -30,5 +30,4 @@ public class CapitalsRepository {
 	public boolean existsByKey(String key) {
 		return capitalsData.existsByKey(key);
 	}
-
 }

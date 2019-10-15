@@ -17,5 +17,4 @@ public class CapitalsData {
 	public boolean existsByKey(String key) {
 		return europeUTC.containsKey(key);
 	}
-
 }
