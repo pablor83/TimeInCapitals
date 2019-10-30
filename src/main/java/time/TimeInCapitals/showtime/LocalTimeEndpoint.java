@@ -35,14 +35,69 @@ public class LocalTimeEndpoint {
 
 	}
 
+	@GetMapping("/africa/{capitalCity}")
+	@ResponseBody
+	public String getCapitalsTimeForAfrica(@PathVariable String capitalCity) throws Exception {
+
+		if (localTimeService.existsByKey(capitalCity) && localTimeService.isCorrectContinent(capitalCity, "africa")) {
+			return localTimeService.getTimeForAfricaCapital(capitalCity);
+		} else {
+			throw new IllegalArgumentException("Bad request. Incorrect capital name, or incorrect capital for this continent");
+		}
+	}
+	
+	@GetMapping("/asia/{capitalCity}")
+	@ResponseBody
+	public String getCapitalsTimeForAsia(@PathVariable String capitalCity) throws Exception {
+
+		if (localTimeService.existsByKey(capitalCity) && localTimeService.isCorrectContinent(capitalCity, "asia")) {
+			return localTimeService.getTimeForAsiaCapital(capitalCity);
+		} else {
+			throw new IllegalArgumentException("Bad request. Incorrect capital name, or incorrect capital for this continent");
+		}
+	}
+	
+	@GetMapping("/australia/{capitalCity}")
+	@ResponseBody
+	public String getCapitalsTimeForAustralia(@PathVariable String capitalCity) throws Exception {
+
+		if (localTimeService.existsByKey(capitalCity) && localTimeService.isCorrectContinent(capitalCity, "australia")) {
+			return localTimeService.getTimeForAustraliaCapital(capitalCity);
+		} else {
+			throw new IllegalArgumentException("Bad request. Incorrect capital name, or incorrect capital for this continent");
+		}
+	}
+	
 	@GetMapping("/europe/{capitalCity}")
 	@ResponseBody
-	public String getCapitalsTime(@PathVariable String capitalCity) throws Exception {
+	public String getCapitalsTimeForEurope(@PathVariable String capitalCity) throws Exception {
 
-		if (localTimeService.existsByKey(capitalCity)) {
+		if (localTimeService.existsByKey(capitalCity) && localTimeService.isCorrectContinent(capitalCity, "europe")) {
 			return localTimeService.getTimeForEuropeCapital(capitalCity);
 		} else {
-			throw new IllegalArgumentException("Bad request. Incorrect capital name");
+			throw new IllegalArgumentException("Bad request. Incorrect capital name, or incorrect capital for this continent");
+		}
+	}
+	
+	@GetMapping("/northamerica/{capitalCity}")
+	@ResponseBody
+	public String getCapitalsTimeForNorthAmerica(@PathVariable String capitalCity) throws Exception {
+
+		if (localTimeService.existsByKey(capitalCity) && localTimeService.isCorrectContinent(capitalCity, "north_america")) {
+			return localTimeService.getTimeForNorthAmericaCapital(capitalCity);
+		} else {
+			throw new IllegalArgumentException("Bad request. Incorrect capital name, or incorrect capital for this continent");
+		}
+	}
+	
+	@GetMapping("/southamerica/{capitalCity}")
+	@ResponseBody
+	public String getCapitalsTimeForSouthAmerica(@PathVariable String capitalCity) throws Exception {
+
+		if (localTimeService.existsByKey(capitalCity) && localTimeService.isCorrectContinent(capitalCity, "south_america")) {
+			return localTimeService.getTimeForSouthAmericaCapital(capitalCity);
+		} else {
+			throw new IllegalArgumentException("Bad request. Incorrect capital name, or incorrect capital for this continent");
 		}
 	}
 }
