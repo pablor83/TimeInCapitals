@@ -17,7 +17,8 @@ Simple API that displays the time in a specific capital.
 * JAVA
 
 ## Setup
-Run TimeInCapitalsApplication.java
+ Create jar `mvnw clean install`  
+ Run `java -jar target\TimeInCapitals-0.0.1-SNAPSHOT.jar`
 
 ## Features
 * showing time in capitals
