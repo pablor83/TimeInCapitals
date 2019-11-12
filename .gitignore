@@ -23,4 +23,7 @@
 hs_err_pid*
 
 # Ignore all file in the "target" directory
-target/
+target/*
+!target/classes
+classes/*
+!target/classes/pathToContinentsFile.properties
