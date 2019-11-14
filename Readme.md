@@ -19,7 +19,9 @@ Simple API that displays the time in a specific capital.
 
 ## Setup
  Create jar: `mvnw clean install`  
- Run: `java -jar target\TimeInCapitals-0.0.1-SNAPSHOT.jar`
+ Run: `java -jar target\TimeInCapitals-0.0.1-SNAPSHOT.jar`  
+ or  
+ To compile and run: `mvnw spring-boot:run`
  
 ## Example use
 To view the time and date for a specific capital, enter in your browser  
