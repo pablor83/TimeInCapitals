@@ -18,14 +18,12 @@ Simple API that displays the time in a specific capital.
 * JAVA
 
 ## Setup
- Create jar: `mvnw clean install`  
- Run: `java -jar target\TimeInCapitals-0.0.1-SNAPSHOT.jar`  
- or  
- To compile and run: `mvnw spring-boot:run`
+Run start.sh sctipt.  
+The application works on port 8080
  
 ## Example use
 To view the time and date for a specific capital, enter in your browser  
-http://localhost:8080/nameOfContinent/capital  
+http://localhost:8080/{nameOfContinent}/{capital}  
 example:  
 http://localhost:8080/europe/london
  
