@@ -15,10 +15,11 @@ TimeInCapitals is a SpringBoot app.
 Simple API that displays the time in a specific capital.
 
 ## Technologies
-* JAVA
+* SpringBoot 2.1.7
+* java 1.8
 
 ## Setup
-Run start.sh sctipt.  
+Run start.sh script.  
 The application works on port 8080
  
 ## Example use
