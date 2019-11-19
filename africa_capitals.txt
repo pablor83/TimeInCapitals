@@ -16,9 +16,9 @@ ghana accra no +0 africa
 guinea conakry no +0 africa 
 guinea_bissau bissau no +0 africa 
 equatorial_guinea malabo no +1 africa 
-cameroon yaoundé no +1 africa 
+cameroon yaounde no +1 africa 
 kenya nairobi no +3 africa 
-chambers moroni no +3 africa 
+comoros moroni no +3 africa 
 congo brazzaville no +1 africa 
 lesotho maseru no +2 africa 
 liberia monrovia no +0 africa 
@@ -37,7 +37,7 @@ south_africa pretoria no +2 africa
 central_african_republic bangui no +1 africa 
 cape_verde praia no -1 africa 
 rwanda kigali no +2 africa 
-western_sahara al-ujun +0 +1 africa 
+western_sahara el-aaiun +0 +1 africa 
 senegal dakar no +0 africa 
 seychelles victoria no +4 africa 
 sierra_leone freetown no +0 africa 

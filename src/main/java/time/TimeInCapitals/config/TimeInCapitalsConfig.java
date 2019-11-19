@@ -17,7 +17,7 @@ import time.TimeInCapitals.data.CapitalsData;
 import time.TimeInCapitals.data.CapitalsUTC;
 
 @Configuration
-@PropertySource("classpath:pathToContinentsFile.properties")
+@PropertySource("classpath:files-paths.properties")
 public class TimeInCapitalsConfig {
 
 	private final int COUNTRY = 0;
@@ -28,12 +28,12 @@ public class TimeInCapitalsConfig {
 
 	@Bean(name = "getCapitalsData")
 	public CapitalsData getDataFromFile(
-			@Value("${source.pathToAfrica}") String pathToAfrica,
-			@Value("${source.pathToAsia}") String pathToAsia,
-			@Value("${source.pathToAustralia}") String pathToAustralia,
-			@Value("${source.pathToEurope}") String pathToEurope,
-			@Value("${source.pathToNorthAmerica}") String pathToNorthAmerica,
-			@Value("${source.pathToSouthAmerica}") String pathToSouthAmerica) {
+			@Value("${source.africa}") String pathToAfrica,
+			@Value("${source.asia}") String pathToAsia,
+			@Value("${source.australia}") String pathToAustralia,
+			@Value("${source.europe}") String pathToEurope,
+			@Value("${source.northAmerica}") String pathToNorthAmerica,
+			@Value("${source.southAmerica}") String pathToSouthAmerica) {
 
 		List<String> textFromFile = new ArrayList<>();
 

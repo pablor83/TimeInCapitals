@@ -57,18 +57,59 @@ public class LocalTimeService {
 				.toLocalDateTime();
 		Instant instant = Instant.now();
 
-		LocalDate endOfSummerZone = YearMonth.of(YearMonth.now().getYear(), Month.OCTOBER).atDay(1)
+		LocalDate endOfSummerZoneAustralia = YearMonth.of(YearMonth.now().getYear(), Month.OCTOBER).atDay(1)
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
-		LocalDate endOfWinterZone = YearMonth.of(YearMonth.now().getYear(), Month.APRIL).atDay(1)
+		LocalDate endOfWinterZoneAustralia = YearMonth.of(YearMonth.now().getYear(), Month.APRIL).atDay(1)
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
-		boolean isBeforeWinterZone = localDateTime.isBefore(LocalDateTime.of(endOfSummerZone, LocalTime.of(02, 00)));
-		boolean isBeforeSummerZone = localDateTime.isBefore(LocalDateTime.of(endOfWinterZone, LocalTime.of(02, 00)));
+		boolean isBeforeWinterZoneAustralia = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneAustralia, LocalTime.of(02, 00)));
+		boolean isBeforeSummerZoneAustralia = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneAustralia, LocalTime.of(02, 00)));
+		
+		LocalDate endOfSummerZoneSuva = YearMonth.of(YearMonth.now().getYear(), Month.JANUARY).atDay(1)
+				.with(TemporalAdjusters.dayOfWeekInMonth(2, DayOfWeek.SUNDAY));
+		LocalDate endOfWinterZoneSuva = YearMonth.of(YearMonth.now().getYear(), Month.NOVEMBER).atDay(1)
+				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
-		if (capitalsRepository.isTimeChanged(capital) && isBeforeWinterZone && !isBeforeSummerZone) {
+		boolean isBeforeWinterZoneSuva = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneSuva, LocalTime.of(02, 00)));
+		boolean isBeforeSummerZoneSuva = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneSuva, LocalTime.of(02, 00)));
+		
+		LocalDate endOfSummerZoneWellingtonAndApia = YearMonth.of(YearMonth.now().getYear(), Month.APRIL).atDay(1)
+				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
+		LocalDate endOfWinterZoneWellingtonAndApia = YearMonth.of(YearMonth.now().getYear(), Month.SEPTEMBER).atEndOfMonth()
+				.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
+
+		boolean isBeforeWinterZoneWellington = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneWellingtonAndApia, LocalTime.of(02, 00)));
+		boolean isBeforeSummerZoneWellington = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneWellingtonAndApia, LocalTime.of(02, 00)));
+		boolean isBeforeWinterZoneApia = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneWellingtonAndApia, LocalTime.of(03, 00)));
+		boolean isBeforeSummerZoneApia = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneWellingtonAndApia, LocalTime.of(03, 00)));		
+		
+		LocalDate endOfSummerZoneKingston = YearMonth.of(YearMonth.now().getYear(), Month.APRIL).atDay(1)
+				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
+		LocalDate endOfWinterZoneKingston = YearMonth.of(YearMonth.now().getYear(), Month.OCTOBER).atDay(1)
+				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
+		
+		boolean isBeforeWinterZoneKingston = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneKingston, LocalTime.of(02, 00)));
+		boolean isBeforeSummerZoneKingston = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneKingston, LocalTime.of(02, 00)));
+
+		
+		
+
+		if (capital.equals("canberra") && capitalsRepository.isTimeChanged(capital) && isBeforeWinterZoneAustralia && !isBeforeSummerZoneAustralia) {
+			ZoneOffset zoneOffset = ZoneOffset.of(capitalsRepository.getSummerUTC(capital));
+			return instant.atZone(ZoneId.ofOffset("UTC", zoneOffset)).format(dateTimeFormatter);			
+		} else if(capital.equals("suva") && capitalsRepository.isTimeChanged(capital) && isBeforeWinterZoneSuva && !isBeforeSummerZoneSuva) {
 			ZoneOffset zoneOffset = ZoneOffset.of(capitalsRepository.getSummerUTC(capital));
 			return instant.atZone(ZoneId.ofOffset("UTC", zoneOffset)).format(dateTimeFormatter);
-		} else {
+		}else if(capital.equals("wellington") && capitalsRepository.isTimeChanged(capital) && isBeforeWinterZoneWellington && !isBeforeSummerZoneWellington) {
+			ZoneOffset zoneOffset = ZoneOffset.of(capitalsRepository.getSummerUTC(capital));
+			return instant.atZone(ZoneId.ofOffset("UTC", zoneOffset)).format(dateTimeFormatter);
+		}else if(capital.equals("apia") && capitalsRepository.isTimeChanged(capital) && isBeforeWinterZoneApia && !isBeforeSummerZoneApia) {
+			ZoneOffset zoneOffset = ZoneOffset.of(capitalsRepository.getSummerUTC(capital));
+			return instant.atZone(ZoneId.ofOffset("UTC", zoneOffset)).format(dateTimeFormatter);
+		}else if(capital.equals("kingston") && capitalsRepository.isTimeChanged(capital) && isBeforeWinterZoneKingston && !isBeforeSummerZoneKingston) {
+			ZoneOffset zoneOffset = ZoneOffset.of(capitalsRepository.getSummerUTC(capital));
+			return instant.atZone(ZoneId.ofOffset("UTC", zoneOffset)).format(dateTimeFormatter);
+		}else {
 			ZoneOffset zoneOffset = ZoneOffset.of(capitalsRepository.getWinterUTC(capital));
 			return instant.atZone(ZoneId.ofOffset("UTC", zoneOffset)).format(dateTimeFormatter);
 		}
