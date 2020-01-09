@@ -1,5 +1,7 @@
 package time.TimeInCapitals.showtime;
 
+import java.time.Clock;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LocalTimeEndpoint {
 
 	private LocalTimeService localTimeService;
-
+	
 	@Autowired
 	public LocalTimeEndpoint(LocalTimeService localTimeService) {
 		this.localTimeService = localTimeService;

@@ -3,6 +3,7 @@ package time.TimeInCapitals.config;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 
 import time.TimeInCapitals.data.CapitalsData;
@@ -25,8 +27,13 @@ public class TimeInCapitalsConfig {
 	private final int SUMMER_TIME = 2;
 	private final int WINTER_TIME = 3;
 	private final int CONTINENT = 4;
+	
+	@Bean
+	public Clock getClock() {
+		return Clock.systemUTC();
+	}
 
-	@Bean(name = "getCapitalsData")
+	@Bean
 	public CapitalsData getDataFromFile(
 			@Value("${source.africa}") String pathToAfrica,
 			@Value("${source.asia}") String pathToAsia,

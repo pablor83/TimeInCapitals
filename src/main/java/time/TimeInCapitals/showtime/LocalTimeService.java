@@ -1,5 +1,6 @@
 package time.TimeInCapitals.showtime;
 
+import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -11,20 +12,24 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
+import java.util.TimeZone;
 
 import org.springframework.stereotype.Service;
 
 import time.TimeInCapitals.repository.CapitalsRepository;
 
 @Service
-public class LocalTimeService {
+public class LocalTimeService {	
 
 	private CapitalsRepository capitalsRepository;
 
 	private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyy");
+	
+	private Clock clock;
 
-	public LocalTimeService(CapitalsRepository capitalsRepository) {
+	public LocalTimeService(CapitalsRepository capitalsRepository, Clock clock) {
 		this.capitalsRepository = capitalsRepository;
+		this.clock = clock;
 	}
 
 	public String getTime() {
@@ -38,14 +43,14 @@ public class LocalTimeService {
 
 	public String getTimeForAfricaCapital(String capital) {
 
-		Instant instant = Instant.now();
+		Instant instant = Instant.now(clock);
 		ZoneOffset zoneOffset = ZoneOffset.of(capitalsRepository.getWinterUTC(capital));
 		return instant.atZone(ZoneId.ofOffset("UTC", zoneOffset)).format(dateTimeFormatter);
 	}
 
 	public String getTimeForAsiaCapital(String capital) {
 
-		Instant instant = Instant.now();
+		Instant instant = Instant.now(clock);
 		ZoneOffset zoneOffset = ZoneOffset.of(capitalsRepository.getWinterUTC(capital));
 		return instant.atZone(ZoneId.ofOffset("UTC", zoneOffset)).format(dateTimeFormatter);
 	}
@@ -55,7 +60,7 @@ public class LocalTimeService {
 		LocalDateTime localDateTime = LocalDateTime.now()
 				.atZone(ZoneId.ofOffset("UTC", ZoneOffset.of(capitalsRepository.getWinterUTC(capital))))
 				.toLocalDateTime();
-		Instant instant = Instant.now();
+		Instant instant = Instant.now(clock);
 
 		LocalDate endOfSummerZoneAustralia = YearMonth.of(YearMonth.now().getYear(), Month.OCTOBER).atDay(1)
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
@@ -118,14 +123,15 @@ public class LocalTimeService {
 
 	public String getTimeForEuropeCapital(String capital) {
 
-		LocalDateTime localDateTime = LocalDateTime.now()
+		LocalDateTime localDateTime = LocalDateTime.now(clock)
 				.atZone(ZoneId.ofOffset("UTC", ZoneOffset.of(capitalsRepository.getWinterUTC(capital))))
 				.toLocalDateTime();
-		Instant instant = Instant.now();
+		
+		Instant instant = Instant.now(clock);
 
-		LocalDate endOfSummerZone = YearMonth.of(YearMonth.now().getYear(), Month.OCTOBER).atEndOfMonth()
+		LocalDate endOfSummerZone = YearMonth.of(YearMonth.now(clock).getYear(), Month.OCTOBER).atEndOfMonth()
 				.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
-		LocalDate endOfWinterZone = YearMonth.of(YearMonth.now().getYear(), Month.MARCH).atEndOfMonth()
+		LocalDate endOfWinterZone = YearMonth.of(YearMonth.now(clock).getYear(), Month.MARCH).atEndOfMonth()
 				.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
 
 		boolean isBeforeWinterZone = localDateTime.isBefore(LocalDateTime.of(endOfSummerZone, LocalTime.of(02, 00)));
@@ -146,7 +152,7 @@ public class LocalTimeService {
 		LocalDateTime localDateTime = LocalDateTime.now()
 				.atZone(ZoneId.ofOffset("UTC", ZoneOffset.of(capitalsRepository.getWinterUTC(capital))))
 				.toLocalDateTime();
-		Instant instant = Instant.now();
+		Instant instant = Instant.now(clock);
 
 		LocalDate endOfSummerZone = YearMonth.of(YearMonth.now().getYear(), Month.NOVEMBER).atDay(1)
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
@@ -185,7 +191,7 @@ public class LocalTimeService {
 		LocalDateTime localDateTime = LocalDateTime.now()
 				.atZone(ZoneId.ofOffset("UTC", ZoneOffset.of(capitalsRepository.getWinterUTC(capital))))
 				.toLocalDateTime();
-		Instant instant = Instant.now();
+		Instant instant = Instant.now(clock);
 
 		LocalDate endOfSummerZoneChile = YearMonth.of(YearMonth.now().getYear(), Month.APRIL).atDay(1)
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
