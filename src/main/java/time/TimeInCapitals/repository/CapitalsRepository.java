@@ -14,17 +14,21 @@ public class CapitalsRepository {
 	public CapitalsRepository(CapitalsData capitalsData) {
 		this.capitalsData = capitalsData;
 	}
-
-	public boolean isTimeChangedForEurope(String capital) {
-		return capitalsData.getEuropeDataUTC(capital).isTimeChanged();
+	
+	public String getContinentName(String capital) {
+		return capitalsData.getContinentName(capital);
 	}
 
-	public String getEuropeSummerUTC(String capital) {
-		return capitalsData.getEuropeDataUTC(capital).getSummerTime();
+	public boolean isTimeChanged(String capital) {
+		return !capitalsData.getCapitalUTC(capital).getSummerTime().equals("no");
 	}
 
-	public String getEuropeWinterUTC(String capital) {
-		return capitalsData.getEuropeDataUTC(capital).getWinterTime();
+	public String getSummerUTC(String capital) {
+		return capitalsData.getCapitalUTC(capital).getSummerTime();
+	}
+
+	public String getWinterUTC(String capital) {
+		return capitalsData.getCapitalUTC(capital).getWinterTime();
 	}
 
 	public boolean existsByKey(String key) {
