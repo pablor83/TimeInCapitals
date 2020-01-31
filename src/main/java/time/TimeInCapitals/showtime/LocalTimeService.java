@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.TimeZone;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import time.TimeInCapitals.repository.CapitalsRepository;
@@ -27,11 +28,13 @@ public class LocalTimeService {
 	
 	private Clock clock;
 
+	@Autowired
 	public LocalTimeService(CapitalsRepository capitalsRepository, Clock clock) {
 		this.capitalsRepository = capitalsRepository;
 		this.clock = clock;
 	}
 
+	//TODO
 	public String getTime() {
 
 		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -67,34 +70,34 @@ public class LocalTimeService {
 		LocalDate endOfWinterZoneAustralia = YearMonth.of(YearMonth.now().getYear(), Month.APRIL).atDay(1)
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
-		boolean isBeforeWinterZoneAustralia = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneAustralia, LocalTime.of(02, 00)));
-		boolean isBeforeSummerZoneAustralia = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneAustralia, LocalTime.of(02, 00)));
+		boolean isBeforeWinterZoneAustralia = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneAustralia, LocalTime.of(2, 0)));
+		boolean isBeforeSummerZoneAustralia = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneAustralia, LocalTime.of(2, 0)));
 		
 		LocalDate endOfSummerZoneSuva = YearMonth.of(YearMonth.now().getYear(), Month.JANUARY).atDay(1)
 				.with(TemporalAdjusters.dayOfWeekInMonth(2, DayOfWeek.SUNDAY));
 		LocalDate endOfWinterZoneSuva = YearMonth.of(YearMonth.now().getYear(), Month.NOVEMBER).atDay(1)
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
-		boolean isBeforeWinterZoneSuva = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneSuva, LocalTime.of(02, 00)));
-		boolean isBeforeSummerZoneSuva = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneSuva, LocalTime.of(02, 00)));
+		boolean isBeforeWinterZoneSuva = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneSuva, LocalTime.of(2, 0)));
+		boolean isBeforeSummerZoneSuva = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneSuva, LocalTime.of(2, 0)));
 		
 		LocalDate endOfSummerZoneWellingtonAndApia = YearMonth.of(YearMonth.now().getYear(), Month.APRIL).atDay(1)
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 		LocalDate endOfWinterZoneWellingtonAndApia = YearMonth.of(YearMonth.now().getYear(), Month.SEPTEMBER).atEndOfMonth()
 				.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
 
-		boolean isBeforeWinterZoneWellington = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneWellingtonAndApia, LocalTime.of(02, 00)));
-		boolean isBeforeSummerZoneWellington = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneWellingtonAndApia, LocalTime.of(02, 00)));
-		boolean isBeforeWinterZoneApia = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneWellingtonAndApia, LocalTime.of(03, 00)));
-		boolean isBeforeSummerZoneApia = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneWellingtonAndApia, LocalTime.of(03, 00)));		
+		boolean isBeforeWinterZoneWellington = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneWellingtonAndApia, LocalTime.of(2, 0)));
+		boolean isBeforeSummerZoneWellington = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneWellingtonAndApia, LocalTime.of(2, 0)));
+		boolean isBeforeWinterZoneApia = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneWellingtonAndApia, LocalTime.of(3, 0)));
+		boolean isBeforeSummerZoneApia = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneWellingtonAndApia, LocalTime.of(3, 0)));		
 		
 		LocalDate endOfSummerZoneKingston = YearMonth.of(YearMonth.now().getYear(), Month.APRIL).atDay(1)
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 		LocalDate endOfWinterZoneKingston = YearMonth.of(YearMonth.now().getYear(), Month.OCTOBER).atDay(1)
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 		
-		boolean isBeforeWinterZoneKingston = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneKingston, LocalTime.of(02, 00)));
-		boolean isBeforeSummerZoneKingston = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneKingston, LocalTime.of(02, 00)));
+		boolean isBeforeWinterZoneKingston = localDateTime.isBefore(LocalDateTime.of(endOfSummerZoneKingston, LocalTime.of(2, 0)));
+		boolean isBeforeSummerZoneKingston = localDateTime.isBefore(LocalDateTime.of(endOfWinterZoneKingston, LocalTime.of(2, 0)));
 
 		
 		
@@ -134,8 +137,8 @@ public class LocalTimeService {
 		LocalDate endOfWinterZone = YearMonth.of(YearMonth.now(clock).getYear(), Month.MARCH).atEndOfMonth()
 				.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
 
-		boolean isBeforeWinterZone = localDateTime.isBefore(LocalDateTime.of(endOfSummerZone, LocalTime.of(02, 00)));
-		boolean isBeforeSummerZone = localDateTime.isBefore(LocalDateTime.of(endOfWinterZone, LocalTime.of(02, 00)));
+		boolean isBeforeWinterZone = localDateTime.isBefore(LocalDateTime.of(endOfSummerZone, LocalTime.of(2, 0)));
+		boolean isBeforeSummerZone = localDateTime.isBefore(LocalDateTime.of(endOfWinterZone, LocalTime.of(2, 0)));
 
 		if (capitalsRepository.isTimeChanged(capital) && isBeforeWinterZone && !isBeforeSummerZone) {
 			ZoneOffset zoneOffset = ZoneOffset.of(capitalsRepository.getSummerUTC(capital));
@@ -159,8 +162,8 @@ public class LocalTimeService {
 		LocalDate endOfWinterZone = YearMonth.of(YearMonth.now().getYear(), Month.MARCH).atDay(1)
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY)).with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
 
-		boolean isBeforeWinterZone = localDateTime.isBefore(LocalDateTime.of(endOfSummerZone, LocalTime.of(02, 00)));
-		boolean isBeforeSummerZone = localDateTime.isBefore(LocalDateTime.of(endOfWinterZone, LocalTime.of(02, 00)));
+		boolean isBeforeWinterZone = localDateTime.isBefore(LocalDateTime.of(endOfSummerZone, LocalTime.of(2, 0)));
+		boolean isBeforeSummerZone = localDateTime.isBefore(LocalDateTime.of(endOfWinterZone, LocalTime.of(2, 0)));
 
 		LocalDate endOfSummerZoneMexico = YearMonth.of(YearMonth.now().getYear(), Month.OCTOBER).atEndOfMonth()
 				.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
@@ -168,9 +171,9 @@ public class LocalTimeService {
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
 		boolean isBeforeWinterZoneMexico = localDateTime
-				.isBefore(LocalDateTime.of(endOfSummerZoneMexico, LocalTime.of(02, 00)));
+				.isBefore(LocalDateTime.of(endOfSummerZoneMexico, LocalTime.of(2, 0)));
 		boolean isBeforeSummerZoneMexico = localDateTime
-				.isBefore(LocalDateTime.of(endOfWinterZoneMexico, LocalTime.of(02, 00)));
+				.isBefore(LocalDateTime.of(endOfWinterZoneMexico, LocalTime.of(2, 0)));
 
 		if (!capital.equals("mexico") && capitalsRepository.isTimeChanged(capital) && isBeforeWinterZone
 				&& !isBeforeSummerZone) {
@@ -199,9 +202,9 @@ public class LocalTimeService {
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
 		boolean isBeforeWinterZoneChile = localDateTime
-				.isBefore(LocalDateTime.of(endOfSummerZoneChile, LocalTime.of(00, 00)));
+				.isBefore(LocalDateTime.of(endOfSummerZoneChile, LocalTime.of(0, 0)));
 		boolean isBeforeSummerZoneChile = localDateTime
-				.isBefore(LocalDateTime.of(endOfWinterZoneChile, LocalTime.of(00, 00)));
+				.isBefore(LocalDateTime.of(endOfWinterZoneChile, LocalTime.of(0, 0)));
 
 		LocalDate endOfSummerZoneParaguay = YearMonth.of(YearMonth.now().getYear(), Month.MARCH).atDay(1)
 				.with(TemporalAdjusters.dayOfWeekInMonth(4, DayOfWeek.SUNDAY)).minusDays(1);
@@ -209,9 +212,9 @@ public class LocalTimeService {
 				.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
 		boolean isBeforeWinterZoneParaguay = localDateTime
-				.isBefore(LocalDateTime.of(endOfSummerZoneParaguay, LocalTime.of(23, 00)));
+				.isBefore(LocalDateTime.of(endOfSummerZoneParaguay, LocalTime.of(23, 0)));
 		boolean isBeforeSummerZoneParaguay = localDateTime
-				.isBefore(LocalDateTime.of(endOfWinterZoneParaguay, LocalTime.of(00, 00)));
+				.isBefore(LocalDateTime.of(endOfWinterZoneParaguay, LocalTime.of(0, 0)));
 
 		if (capital.equals("santiago") && capitalsRepository.isTimeChanged(capital)
 				&& (isBeforeWinterZoneChile || isBeforeSummerZoneChile)

@@ -5,15 +5,13 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
-import time.TimeInCapitals.showtime.LocalTimeService;
-
+@TestConfiguration
 public class TimeInCapitalsApplicationTestsConfig {
-			
+					
 	@Bean
 	@Primary
 	Clock getTestClock() {
