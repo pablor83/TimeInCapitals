@@ -41,7 +41,7 @@ public class ServiceDST {
 			boolean isWinterTimeSuva = localDateTime
 					.isAfter(LocalDateTime.of(startSummerZoneSuva, LocalTime.of(2, 0).minusSeconds(1)));
 
-			return isSumerTimeSuva && isWinterTimeSuva;
+			return (!isSumerTimeSuva && !isWinterTimeSuva) || (isSumerTimeSuva && isWinterTimeSuva);
 
 		}
 
@@ -59,7 +59,7 @@ public class ServiceDST {
 				boolean isWinterTimeWellington = localDateTime.isAfter(
 						LocalDateTime.of(startSummerZoneWellingtonAndApia, LocalTime.of(2, 0).minusSeconds(1)));
 
-				return isSumerTimeWellington && isWinterTimeWellington;
+				return (isSumerTimeWellington && isWinterTimeWellington) || (isSumerTimeWellington && isWinterTimeWellington);
 			}
 
 			else {
@@ -68,7 +68,7 @@ public class ServiceDST {
 				boolean isWinterTimeApia = localDateTime.isAfter(
 						LocalDateTime.of(startSummerZoneWellingtonAndApia, LocalTime.of(3, 0).minusSeconds(1)));
 
-				return isSumerTimeApia && isWinterTimeApia;
+				return (!isSumerTimeApia && !isWinterTimeApia) || (isSumerTimeApia && isWinterTimeApia);
 			}
 
 		}
@@ -85,7 +85,7 @@ public class ServiceDST {
 			boolean isWinterTimeKingston = localDateTime
 					.isAfter(LocalDateTime.of(startSummerZoneKingston, LocalTime.of(2, 0).minusSeconds(1)));
 
-			return isSumerTimeKingston && isWinterTimeKingston;
+			return (!isSumerTimeKingston && !isWinterTimeKingston) || (isSumerTimeKingston && isWinterTimeKingston);
 
 		}
 
