@@ -8,8 +8,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
-import com.pablor83.timeincapitals.repository.CapitalsRepository;
-import com.pablor83.timeincapitals.showtime.LocalTimeService;
+import timeincapitals.repository.CapitalsRepository;
+import timeincapitals.showtime.LocalTimeService;
+import timeincapitals.showtime.ServiceDST;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +27,9 @@ public class TimeInCapitalsApplicationTests{
 	
 	@Mock
 	private CapitalsRepository capitalsRepository;
+	
+	@Mock
+	private ServiceDST serviceDST;
 		
 	private Clock clock;
 	
@@ -40,7 +45,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc2AMWLondynieSerwerWWarszawieDzienZmianyCzasuNaZimowy() {
 		clock = Clock.fixed(LocalDateTime.of(2019, 10, 27, 2, 0, 0).toInstant(ZoneOffset.of("+1")), ZoneId.of("+1"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("london")).thenReturn("+0");
 		assertEquals("02:00:00 27/10/2019", localTimeService.getTimeForEuropeCapital("london"));
 	}
@@ -49,7 +54,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc2AMWWarszawieSerwerWLondynieDzienZmianyCzasuNaZimowy() {		
 		clock = Clock.fixed(LocalDateTime.of(2019, 10, 27, 2, 0, 0).toInstant(ZoneOffset.of("+1")), ZoneId.of("+1"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("warsaw")).thenReturn("+1");
 		assertEquals("02:00:00 27/10/2019", localTimeService.getTimeForEuropeCapital("warsaw"));
 		
@@ -59,7 +64,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc2AMCzasuZimowegoSerwerWWarszawieDzienZmianyCzasuNaZimowy() {
 		clock = Clock.fixed(LocalDateTime.of(2019, 10, 27, 2, 0, 0).toInstant(ZoneOffset.of("+1")), ZoneId.of("+1"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("warsaw")).thenReturn("+1");
 		assertEquals("02:00:00 27/10/2019", localTimeService.getTimeForEuropeCapital("warsaw"));
 	}
@@ -68,7 +73,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc2AMCzasZimowyPodczasGdyNaZegarzeJest3AMCzasuLetniegoSerwerWWarszawie() {
 		clock = Clock.fixed(LocalDateTime.of(2019, 10, 27, 3, 0, 0).toInstant(ZoneOffset.of("+2")), ZoneId.of("+2"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("warsaw")).thenReturn("+1");
 		assertEquals("02:00:00 27/10/2019", localTimeService.getTimeForEuropeCapital("warsaw"));
 	}
@@ -77,7 +82,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc3AMWWarszawieCzasuLetniegoDzienZmianyCzasuNaLetniSerwerWWarszawie() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 3, 29, 2, 0, 0).toInstant(ZoneOffset.of("+1")), ZoneId.of("+1"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("warsaw")).thenReturn("+1");
 		assertEquals("03:00:00 27/10/2019", localTimeService.getTimeForEuropeCapital("warsaw"));
 	}
@@ -86,7 +91,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc1AMWLondynieGdyWWarszawieBedzie3AMDSTSerwerWWarszawie() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 3, 29, 3, 0, 0).toInstant(ZoneOffset.of("+2")), ZoneId.of("+2"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("london")).thenReturn("+0");
 		assertEquals("01:00:00 27/10/2019", localTimeService.getTimeForEuropeCapital("london"));
 	}
@@ -95,7 +100,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc13PMWWarszawieSerwerWStrefieCzasowejPlus8UTC() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 1, 15, 20, 0, 0).toInstant(ZoneOffset.of("+8")), ZoneId.of("+8"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("warsaw")).thenReturn("+1");
 		assertEquals("13:00:00 15/01/2020", localTimeService.getTimeForEuropeCapital("warsaw"));
 	}
@@ -104,7 +109,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc14PMWWarszawieSerwerPlus8UTC() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 7, 1, 20, 0, 0).toInstant(ZoneOffset.of("+8")), ZoneId.of("+8"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("warsaw")).thenReturn("+1");
 		assertEquals("14:00:00 01/07/2020", localTimeService.getTimeForEuropeCapital("warsaw"));
 	}
@@ -113,7 +118,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc14PMWOttawieSerwerWWarszawie() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 1, 2, 20, 0, 0).toInstant(ZoneOffset.of("+1")), ZoneId.of("+1"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("ottawa")).thenReturn("-5");
 		assertEquals("14:00:00 02/01/2020", localTimeService.getTimeForEuropeCapital("ottawa"));
 	}
@@ -122,7 +127,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc02AMWWarszawieSerwerWOttawie() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 1, 2, 20, 0, 0).toInstant(ZoneOffset.of("-5")), ZoneId.of("-5"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("warsaw")).thenReturn("+1");
 		assertEquals("02:00:00 03/01/2020", localTimeService.getTimeForEuropeCapital("warsaw"));
 	}
@@ -131,7 +136,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc3AMWOttawieDzienZmianyCzasuNaLetniWOttawieSerwerWWarszawie() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 3, 8, 8, 0, 0).toInstant(ZoneOffset.of("+1")), ZoneId.of("+1"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("ottawa")).thenReturn("-5");
 		assertEquals("03:00:00 08/03/2020", localTimeService.getTimeForEuropeCapital("ottawa"));
 	}
@@ -140,7 +145,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc1130DlaKabuluSerwerWWarszawie() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 1, 2, 8, 0, 0).toInstant(ZoneOffset.of("+1")), ZoneId.of("+1"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("kabul")).thenReturn("+04:30");
 		assertEquals("11:30:00 02/01/2020", localTimeService.getTimeForEuropeCapital("kabul"));
 	}
@@ -149,7 +154,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc1030WKabuluSerwerWWarszawie() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 7, 1, 8, 0, 0).toInstant(ZoneOffset.of("+2")), ZoneId.of("+2"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("kabul")).thenReturn("+04:30");
 		assertEquals("10:30:00 01/07/2020", localTimeService.getTimeForEuropeCapital("kabul"));
 	}
@@ -158,7 +163,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc0630WWarszawieSerwerWKabulu() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 1, 2, 10, 0, 0).toInstant(ZoneOffset.of("+04:30")), ZoneId.of("+04:30"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("warsaw")).thenReturn("+1");
 		assertEquals("06:30:00 02/01/2020", localTimeService.getTimeForEuropeCapital("warsaw"));
 	}
@@ -167,7 +172,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc0730WWarszawieCzasLetniSerwerWKabulu() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 7, 1, 10, 0, 0).toInstant(ZoneOffset.of("+04:30")), ZoneId.of("+04:30"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("warsaw")).thenReturn("+1");
 		assertEquals("07:30:00 01/07/2020", localTimeService.getTimeForEuropeCapital("warsaw"));
 	}
@@ -176,7 +181,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc02AMWMinskuSerwerWWarszawieDzienZmianyCzasuNaZimowy() {
 		clock = Clock.fixed(LocalDateTime.of(2019, 10, 27, 1, 0, 0).toInstant(ZoneOffset.of("+2")), ZoneId.of("+2"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("minsk")).thenReturn("+3");
 		assertEquals("02:00:00 27/10/2019", localTimeService.getTimeForEuropeCapital("minsk"));
 	}
@@ -185,7 +190,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc04AMWMinskuSerwerWWarszawieZmianaCzasuNaZimowy() {
 		clock = Clock.fixed(LocalDateTime.of(2019, 10, 27, 2, 0, 0).toInstant(ZoneOffset.of("+1")), ZoneId.of("+1"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("minsk")).thenReturn("+3");
 		assertEquals("04:00:00 27/10/2019", localTimeService.getTimeForEuropeCapital("minsk"));
 	}
@@ -194,7 +199,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc04AMWMinskuSerwerWWarszawieDzienZmianyCzasuNaLetni() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 3, 29, 3, 0, 0).toInstant(ZoneOffset.of("+2")), ZoneId.of("+2"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("minsk")).thenReturn("+3");
 		assertEquals("04:00:00 29/03/2020", localTimeService.getTimeForEuropeCapital("minsk"));
 	}
@@ -203,7 +208,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc02AMWMinskuSerwerWWarszawieDzienZmianuCzasuNaLetni() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 3, 29, 0, 0, 0).toInstant(ZoneOffset.of("+1")), ZoneId.of("+1"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("minsk")).thenReturn("+3");
 		assertEquals("02:00:00 29/03/2020", localTimeService.getTimeForEuropeCapital("minsk"));
 	}
@@ -212,7 +217,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc02AMWMeksykuSerwerWWarszawieCzasZimowy() {
 		clock = Clock.fixed(LocalDateTime.of(2019, 10, 27, 9, 0, 0).toInstant(ZoneOffset.of("+1")), ZoneId.of("+1"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("mexico")).thenReturn("-6");
 		assertEquals("02:00:00 27/10/2019", localTimeService.getTimeForEuropeCapital("mexico"));
 	}
@@ -221,7 +226,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc03AMDlaMeksykuSerwerWWarszawieCzasLetni() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 4, 5, 8, 0, 0).toInstant(ZoneOffset.of("+2")), ZoneId.of("+2"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("mexico")).thenReturn("-6");
 		assertEquals("03:00:00 05/04/2020", localTimeService.getTimeForEuropeCapital("mexico"));
 	}
@@ -230,7 +235,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc04AMWMeksykuSerwerWWarszawieCzasLetni() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 4, 1, 10, 0, 0).toInstant(ZoneOffset.of("+2")), ZoneId.of("+2"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("mexico")).thenReturn("-6");
 		assertEquals("04:00:00 01/04/2020", localTimeService.getTimeForEuropeCapital("mexico"));
 	}
@@ -239,7 +244,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc02AMWCanberraSerwerWCanberraZmianaNaCzasZimowy() {
 		clock = Clock.fixed(LocalDateTime.of(2019, 10, 06, 2, 0, 0).toInstant(ZoneOffset.of("+10")), ZoneId.of("+10"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("canberra")).thenReturn("+10");
 		assertEquals("02:00:00 06/10/2019", localTimeService.getTimeForEuropeCapital("canberra"));
 	}
@@ -248,7 +253,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc03AMWCanberraSerwerWCanberraZmianaNaCzasLetni() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 4, 5, 2, 0, 0).toInstant(ZoneOffset.of("+10")), ZoneId.of("+10"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("canberra")).thenReturn("+10");
 		assertEquals("03:00:00 05/04/2020", localTimeService.getTimeForEuropeCapital("canberra"));
 	}
@@ -257,7 +262,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc2AMSuvaSerwerSuvaZmianaCzasuNaZimowy() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 1, 12, 2, 0, 0).toInstant(ZoneOffset.of("+12")), ZoneId.of("+12"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("suva")).thenReturn("+12");
 		assertEquals("02:00:00 12/01/2020", localTimeService.getTimeForEuropeCapital("suva"));
 	}
@@ -266,7 +271,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc3AMSuvaSerwerSuvaZmianaCzasuNaletni() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 11, 1, 2, 0, 0).toInstant(ZoneOffset.of("+12")), ZoneId.of("+12"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("suva")).thenReturn("+12");
 		assertEquals("03:00:00 01/11/2020", localTimeService.getTimeForEuropeCapital("suva"));
 	}
@@ -275,7 +280,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc2AMWellingotSerwerWellingtonZmianaCzasuNaZimowy() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 4, 5, 2, 0, 0).toInstant(ZoneOffset.of("+12")), ZoneId.of("+12"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("wellington")).thenReturn("+12");
 		assertEquals("02:00:00 05/04/2020", localTimeService.getTimeForEuropeCapital("wellington"));
 	}
@@ -284,7 +289,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc3AMWellingotSerwerWellingtonZmianaCzasuNaLetni() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 9, 27, 2, 0, 0).toInstant(ZoneOffset.of("+12")), ZoneId.of("+12"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("wellington")).thenReturn("+12");
 		assertEquals("03:00:00 27/09/2020", localTimeService.getTimeForEuropeCapital("wellington"));
 	}
@@ -293,7 +298,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc3AMApiaSerwerApiaZmianaCzasuNaZimowy() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 4, 5, 3, 0, 0).toInstant(ZoneOffset.of("+13")), ZoneId.of("+13"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("apia")).thenReturn("+13");
 		assertEquals("03:00:00 05/04/2020", localTimeService.getTimeForEuropeCapital("apia"));
 	}
@@ -302,7 +307,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc4AMApiaSerwerApiaZmianaCzasuNaLetni() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 9, 27, 3, 0, 0).toInstant(ZoneOffset.of("+13")), ZoneId.of("+13"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("apia")).thenReturn("+13");
 		assertEquals("04:00:00 27/09/2020", localTimeService.getTimeForEuropeCapital("apia"));
 	}
@@ -311,7 +316,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc2AMKingstoneSerwerKingstoneZmianaCzasuNaZimowy() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 4, 5, 2, 0, 0).toInstant(ZoneOffset.of("+11")), ZoneId.of("+11"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("kingstone")).thenReturn("+11");
 		assertEquals("02:00:00 05/04/2020", localTimeService.getTimeForEuropeCapital("kingstone"));
 	}
@@ -320,7 +325,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc2AMKingstoneSerwerKingstoneZmianaCzasuNaLetni() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 10, 4, 2, 0, 0).toInstant(ZoneOffset.of("+11")), ZoneId.of("+11"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("kingstone")).thenReturn("+11");
 		assertEquals("03:00:00 04/10/2020", localTimeService.getTimeForEuropeCapital("kingstone"));
 	}
@@ -329,7 +334,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc120201SprawdzenieDlaGodzinMinutSekund() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 1, 2, 12, 2, 1).toInstant(ZoneOffset.of("+1")), ZoneId.of("+1"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("warsaw")).thenReturn("+1");
 		assertEquals("12:02:01 02/01/2020", localTimeService.getTimeForEuropeCapital("warsaw"));
 	}
@@ -338,7 +343,7 @@ public class TimeInCapitalsApplicationTests{
 	@Test
 	public void powinnaByc215915SprawdzenieDlaGodzinMinutSekund() {
 		clock = Clock.fixed(LocalDateTime.of(2020, 5, 12, 21, 59, 15).toInstant(ZoneOffset.of("+2")), ZoneId.of("+2"));
-		localTimeService = new LocalTimeService(capitalsRepository, clock);
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
 		when(capitalsRepository.getWinterUTC("warsaw")).thenReturn("+1");
 		assertEquals("21:59:15 12/05/2020", localTimeService.getTimeForEuropeCapital("warsaw"));
 	}
