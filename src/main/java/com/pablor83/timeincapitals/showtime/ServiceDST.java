@@ -1,4 +1,4 @@
-package timeincapitals.showtime;
+package com.pablor83.timeincapitals.showtime;
 
 import java.time.Clock;
 import java.time.DayOfWeek;
@@ -119,10 +119,10 @@ public class ServiceDST {
 		LocalDate startSummerZone = YearMonth
 				.of(YearMonth.now(clock.withZone(ZoneId.of(winterUTC))).getYear(), Month.MARCH).atEndOfMonth()
 				.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
-
-		boolean isSummerTime = localDateTime
-				.isAfter(LocalDateTime.of(startWinterZone, LocalTime.of(2, 0).minusSeconds(1)));
+		
 		boolean isWinterTime = localDateTime
+				.isAfter(LocalDateTime.of(startWinterZone, LocalTime.of(2, 0).minusSeconds(1)));
+		boolean isSummerTime = localDateTime
 				.isAfter(LocalDateTime.of(startSummerZone, LocalTime.of(2, 0).minusSeconds(1)));
 
 		return isSummerTime && !isWinterTime;
@@ -159,10 +159,10 @@ public class ServiceDST {
 			LocalDate startSummerZone = YearMonth.of(YearMonth.now().getYear(), Month.MARCH).atDay(1)
 					.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY))
 					.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
-
-			boolean isSummerTime = localDateTime
-					.isAfter(LocalDateTime.of(startWinterZone, LocalTime.of(2, 0).minusSeconds(1)));
+			
 			boolean isWinterTime = localDateTime
+					.isAfter(LocalDateTime.of(startWinterZone, LocalTime.of(2, 0).minusSeconds(1)));
+			boolean isSummerTime = localDateTime
 					.isAfter(LocalDateTime.of(startSummerZone, LocalTime.of(2, 0).minusSeconds(1)));
 
 			return isSummerTime && !isWinterTime;

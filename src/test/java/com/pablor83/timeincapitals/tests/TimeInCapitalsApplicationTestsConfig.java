@@ -12,9 +12,9 @@ import org.springframework.context.annotation.Primary;
 @TestConfiguration
 public class TimeInCapitalsApplicationTestsConfig {
 					
-	@Bean
-	@Primary
-	Clock getTestClock() {
-		return Clock.fixed(LocalDateTime.of(2019, 10, 27, 02, 00, 00).toInstant(ZoneOffset.of("+1")), ZoneId.of("+1"));
-	}
+//	@Bean
+//	@Primary
+//	Clock getTestClock() {
+//		return Clock.fixed(LocalDateTime.of(2019, 10, 27, 02, 00, 00).toInstant(ZoneOffset.of("+1")), ZoneId.of("+1"));
+//	}
 }

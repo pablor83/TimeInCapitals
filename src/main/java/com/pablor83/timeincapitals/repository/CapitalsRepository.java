@@ -1,9 +1,9 @@
-package timeincapitals.repository;
+package com.pablor83.timeincapitals.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import timeincapitals.data.CapitalsData;
+import com.pablor83.timeincapitals.data.CapitalsData;
 
 @Repository
 public class CapitalsRepository {

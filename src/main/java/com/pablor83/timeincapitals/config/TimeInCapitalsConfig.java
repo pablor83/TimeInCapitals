@@ -1,4 +1,4 @@
-package timeincapitals.config;
+package com.pablor83.timeincapitals.config;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import timeincapitals.data.CapitalsData;
-import timeincapitals.data.CapitalsUTC;
+import com.pablor83.timeincapitals.data.CapitalsData;
+import com.pablor83.timeincapitals.data.CapitalsUTC;
 
 @Configuration
 @PropertySource("classpath:files-paths.properties")

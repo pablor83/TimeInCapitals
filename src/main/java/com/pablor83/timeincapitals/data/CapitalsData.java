@@ -1,4 +1,4 @@
-package timeincapitals.data;
+package com.pablor83.timeincapitals.data;
 
 import java.util.Map;
 

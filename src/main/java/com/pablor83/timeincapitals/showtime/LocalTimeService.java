@@ -1,4 +1,4 @@
-package timeincapitals.showtime;
+package com.pablor83.timeincapitals.showtime;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import timeincapitals.repository.CapitalsRepository;
+import com.pablor83.timeincapitals.repository.CapitalsRepository;
 
 @Service
 public class LocalTimeService {
