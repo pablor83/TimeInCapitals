@@ -24,26 +24,9 @@ The application works on port 8080
  
 ## Example use
 To view the time and date for a specific capital, enter in your browser  
-http://localhost:8080/{nameOfContinent}/{capital}  
+http://localhost:8080/{capital}  
 example:  
-http://localhost:8080/europe/london
- 
-Names of continents:  
-/africa/  
-/asia/  
-/australia/  
-/europe/  
-/northamerica/  
-/southamerica/
- 
-To display the local time and date, enter in the browser  
-http://localhost:8080/localtime
-
-Local time only  
-http://localhost:8080/localtime/time
- 
-Local date only  
-http://localhost:8080/localtime/date
+http://localhost:8080/london
 
 ## Features
 * showing time in capitals
