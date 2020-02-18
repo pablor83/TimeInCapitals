@@ -141,4 +141,244 @@ public class TimeInCapitalsApplicationTests {
 		when(serviceDST.isDSTForNorthAmerica("-5", "ottawa")).thenReturn(true);
 		assertEquals("03:00:00 08/03/2020", localTimeService.getTimeForNorthAmericaCapital("ottawa"));
 	}
+	
+	@DisplayName("10.Should be 2AM in Ottawa end of the year")
+	@Test
+	public void shouldBe100501InOttawaEndOfTheYear() {
+		clock = Clock.fixed(Instant.parse("2020-12-31T15:05:01.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("ottawa")).thenReturn("-5");
+		when(capitalsRepository.isTimeChanged("ottawa")).thenReturn(true);
+		when(serviceDST.isDSTForNorthAmerica("-5", "ottawa")).thenReturn(false);
+		assertEquals("10:05:01 31/12/2020", localTimeService.getTimeForEuropeCapital("ottawa"));
+	}
+	
+	@DisplayName("11.Should be 2AM in Ottawa The beginning of the year")
+	@Test
+	public void shouldBe05AMInOttawaTheBeginningOfTheYear() {
+		clock = Clock.fixed(Instant.parse("2020-01-01T10:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("ottawa")).thenReturn("-5");
+		when(capitalsRepository.getSummerUTC("ottawa")).thenReturn("-4");
+		when(capitalsRepository.isTimeChanged("ottawa")).thenReturn(true);
+		when(serviceDST.isDSTForNorthAmerica("-5", "ottawa")).thenReturn(false);
+		assertEquals("05:00:00 01/01/2020", localTimeService.getTimeForNorthAmericaCapital("ottawa"));
+	}
+	
+	@DisplayName("12.Should be 2AM in Ottawa")
+	@Test
+	public void shouldBe17AMInOttawa() {
+		clock = Clock.fixed(Instant.parse("2020-10-01T21:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("ottawa")).thenReturn("-5");
+		when(capitalsRepository.getSummerUTC("ottawa")).thenReturn("-4");
+		when(capitalsRepository.isTimeChanged("ottawa")).thenReturn(true);
+		when(serviceDST.isDSTForNorthAmerica("-5", "ottawa")).thenReturn(true);
+		assertEquals("17:00:00 01/10/2020", localTimeService.getTimeForNorthAmericaCapital("ottawa"));
+	}
+	
+	@DisplayName("13.Should be 2AM in Mexico the day of winter time change")
+	@Test
+	public void shouldBe14InMexicoTheDayOfWinterTimeChange() {
+		clock = Clock.fixed(Instant.parse("2020-10-25T08:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("mexico")).thenReturn("-6");
+		when(capitalsRepository.isTimeChanged("mexico")).thenReturn(true);
+		when(serviceDST.isDSTForNorthAmerica("-6", "mexico")).thenReturn(false);
+		assertEquals("02:00:00 25/10/2020", localTimeService.getTimeForEuropeCapital("mexico"));
+	}
+	
+	@DisplayName("14.Should be 2AM in Mexico the day of summer time change")
+	@Test
+	public void shouldBe03AMInMexicoTheDayOfSummerTimeChange() {
+		clock = Clock.fixed(Instant.parse("2020-04-05T08:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("mexico")).thenReturn("-6");
+		when(capitalsRepository.getSummerUTC("mexico")).thenReturn("-5");
+		when(capitalsRepository.isTimeChanged("mexico")).thenReturn(true);
+		when(serviceDST.isDSTForNorthAmerica("-6", "mexico")).thenReturn(true);
+		assertEquals("03:00:00 05/04/2020", localTimeService.getTimeForNorthAmericaCapital("mexico"));
+	}
+	
+	@DisplayName("15.Should be 2AM in Mexico end of the year")
+	@Test
+	public void shouldBe100501InMexicoEndOfTheYear() {
+		clock = Clock.fixed(Instant.parse("2020-12-31T15:05:01.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("mexico")).thenReturn("-6");
+		when(capitalsRepository.isTimeChanged("mexico")).thenReturn(true);
+		when(serviceDST.isDSTForNorthAmerica("-6", "mexico")).thenReturn(false);
+		assertEquals("09:05:01 31/12/2020", localTimeService.getTimeForEuropeCapital("mexico"));
+	}
+	
+	@DisplayName("16.Should be 2AM in Mexico The beginning of the year")
+	@Test
+	public void shouldBe05AMInMexicoTheBeginningOfTheYear() {
+		clock = Clock.fixed(Instant.parse("2020-01-01T10:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("mexico")).thenReturn("-6");
+		when(capitalsRepository.isTimeChanged("mexico")).thenReturn(true);
+		when(serviceDST.isDSTForNorthAmerica("-6", "mexico")).thenReturn(false);
+		assertEquals("04:00:00 01/01/2020", localTimeService.getTimeForNorthAmericaCapital("mexico"));
+	}
+	
+	@DisplayName("17.Should be 2AM in Mexico")
+	@Test
+	public void shouldBe17AMInMexico() {
+		clock = Clock.fixed(Instant.parse("2020-10-01T21:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("mexico")).thenReturn("-6");
+		when(capitalsRepository.getSummerUTC("mexico")).thenReturn("-5");
+		when(capitalsRepository.isTimeChanged("mexico")).thenReturn(true);
+		when(serviceDST.isDSTForNorthAmerica("-6", "mexico")).thenReturn(true);
+		assertEquals("16:00:00 01/10/2020", localTimeService.getTimeForNorthAmericaCapital("mexico"));
+	}
+	
+	@DisplayName("18.Should be 2AM in BuenosAires end of the year")
+	@Test
+	public void shouldBe100501InBuenosAiresEndOfTheYear() {
+		clock = Clock.fixed(Instant.parse("2020-12-31T15:05:01.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("buenos_aires")).thenReturn("-3");
+		when(capitalsRepository.isTimeChanged("buenos_aires")).thenReturn(false);		
+		assertEquals("12:05:01 31/12/2020", localTimeService.getTimeForSouthAmericaCapital("buenos_aires"));
+	}
+	
+	@DisplayName("19.Should be 2AM in BuenosAires The beginning of the year")
+	@Test
+	public void shouldBe05AMInBuenosAiresTheBeginningOfTheYear() {
+		clock = Clock.fixed(Instant.parse("2020-01-01T10:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("buenos_aires")).thenReturn("-3");
+		when(capitalsRepository.isTimeChanged("buenos_aires")).thenReturn(false);
+		assertEquals("07:00:00 01/01/2020", localTimeService.getTimeForSouthAmericaCapital("buenos_aires"));
+	}
+	
+	@DisplayName("20.Should be 2AM in Mexico")
+	@Test
+	public void shouldBe17AMInBuenosAires() {
+		clock = Clock.fixed(Instant.parse("2020-10-01T21:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("buenos_aires")).thenReturn("-3");
+		when(capitalsRepository.isTimeChanged("buenos_aires")).thenReturn(false);
+		assertEquals("18:00:00 01/10/2020", localTimeService.getTimeForSouthAmericaCapital("buenos_aires"));
+	}
+	
+	@DisplayName("21.Should be 2AM in Santiago the day of winter time change")
+	@Test
+	public void shouldBe14InSantiagoTheDayOfWinterTimeChange() {
+		clock = Clock.fixed(Instant.parse("2020-04-05T04:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("santiago")).thenReturn("-4");
+		when(capitalsRepository.isTimeChanged("santiago")).thenReturn(true);
+		when(serviceDST.isDSTForSouthAmerica("-4", "santiago")).thenReturn(false);
+		assertEquals("00:00:00 05/04/2020", localTimeService.getTimeForSouthAmericaCapital("santiago"));
+	}
+	
+	@DisplayName("22.Should be 2AM in Santiago the day of summer time change")
+	@Test
+	public void shouldBe03AMInSantiagoTheDayOfSummerTimeChange() {
+		clock = Clock.fixed(Instant.parse("2020-04-05T04:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("santiago")).thenReturn("-4");
+		when(capitalsRepository.getSummerUTC("santiago")).thenReturn("-3");
+		when(capitalsRepository.isTimeChanged("santiago")).thenReturn(true);
+		when(serviceDST.isDSTForSouthAmerica("-4", "santiago")).thenReturn(true);
+		assertEquals("01:00:00 05/04/2020", localTimeService.getTimeForSouthAmericaCapital("santiago"));
+	}
+	
+	@DisplayName("23.Should be 2AM in Santiago end of the year")
+	@Test
+	public void shouldBe100501InSantiagoEndOfTheYear() {
+		clock = Clock.fixed(Instant.parse("2020-12-31T15:05:01.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("santiago")).thenReturn("-4");
+		when(capitalsRepository.getSummerUTC("santiago")).thenReturn("-3");
+		when(capitalsRepository.isTimeChanged("santiago")).thenReturn(true);
+		when(serviceDST.isDSTForSouthAmerica("-4", "santiago")).thenReturn(true);
+		assertEquals("12:05:01 31/12/2020", localTimeService.getTimeForSouthAmericaCapital("santiago"));
+	}
+	
+	@DisplayName("24.Should be 2AM in Santiago The beginning of the year")
+	@Test
+	public void shouldBe05AMInSantiagoTheBeginningOfTheYear() {
+		clock = Clock.fixed(Instant.parse("2020-01-01T10:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("santiago")).thenReturn("-4");
+		when(capitalsRepository.getSummerUTC("santiago")).thenReturn("-3");
+		when(capitalsRepository.isTimeChanged("santiago")).thenReturn(true);
+		when(serviceDST.isDSTForSouthAmerica("-4", "santiago")).thenReturn(true);
+		assertEquals("07:00:00 01/01/2020", localTimeService.getTimeForSouthAmericaCapital("santiago"));
+	}
+	
+	@DisplayName("25.Should be 2AM in Santiago")
+	@Test
+	public void shouldBe17AMInSantiago() {
+		clock = Clock.fixed(Instant.parse("2020-09-01T21:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("santiago")).thenReturn("-4");
+		when(capitalsRepository.getSummerUTC("santiago")).thenReturn("-3");
+		when(capitalsRepository.isTimeChanged("santiago")).thenReturn(true);
+		when(serviceDST.isDSTForSouthAmerica("-4", "santiago")).thenReturn(true);
+		assertEquals("18:00:00 01/09/2020", localTimeService.getTimeForSouthAmericaCapital("santiago"));
+	}
+	
+	@DisplayName("26.Should be 2AM in Asuncion the day of winter time change")
+	@Test
+	public void shouldBe14InAsuncionTheDayOfWinterTimeChange() {
+		clock = Clock.fixed(Instant.parse("2020-03-22T04:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("asuncion")).thenReturn("-4");
+		when(capitalsRepository.isTimeChanged("asuncion")).thenReturn(true);
+		when(serviceDST.isDSTForSouthAmerica("-4", "asuncion")).thenReturn(false);
+		assertEquals("00:00:00 22/03/2020", localTimeService.getTimeForSouthAmericaCapital("asuncion"));
+	}
+	
+	@DisplayName("27.Should be 2AM in Asuncion the day of summer time change")
+	@Test
+	public void shouldBe03AMInAsuncionTheDayOfSummerTimeChange() {
+		clock = Clock.fixed(Instant.parse("2020-10-04T04:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("asuncion")).thenReturn("-4");
+		when(capitalsRepository.getSummerUTC("asuncion")).thenReturn("-3");
+		when(capitalsRepository.isTimeChanged("asuncion")).thenReturn(true);
+		when(serviceDST.isDSTForSouthAmerica("-4", "asuncion")).thenReturn(true);
+		assertEquals("01:00:00 04/10/2020", localTimeService.getTimeForSouthAmericaCapital("asuncion"));
+	}
+	
+	@DisplayName("28.Should be 2AM in Asuncion end of the year")
+	@Test
+	public void shouldBe100501InAsuncionEndOfTheYear() {
+		clock = Clock.fixed(Instant.parse("2020-12-31T15:05:01.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("asuncion")).thenReturn("-4");
+		when(capitalsRepository.getSummerUTC("asuncion")).thenReturn("-3");
+		when(capitalsRepository.isTimeChanged("asuncion")).thenReturn(true);
+		when(serviceDST.isDSTForSouthAmerica("-4", "asuncion")).thenReturn(true);
+		assertEquals("12:05:01 31/12/2020", localTimeService.getTimeForSouthAmericaCapital("asuncion"));
+	}
+	
+	@DisplayName("29.Should be 2AM in Asuncion The beginning of the year")
+	@Test
+	public void shouldBe05AMInAsuncionTheBeginningOfTheYear() {
+		clock = Clock.fixed(Instant.parse("2020-01-01T10:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("asuncion")).thenReturn("-4");
+		when(capitalsRepository.getSummerUTC("asuncion")).thenReturn("-3");
+		when(capitalsRepository.isTimeChanged("asuncion")).thenReturn(true);
+		when(serviceDST.isDSTForSouthAmerica("-4", "asuncion")).thenReturn(true);
+		assertEquals("07:00:00 01/01/2020", localTimeService.getTimeForSouthAmericaCapital("asuncion"));
+	}
+	
+	@DisplayName("30.Should be 2AM in Asuncion")
+	@Test
+	public void shouldBe17AMInAsuncion() {
+		clock = Clock.fixed(Instant.parse("2020-09-01T21:00:00.00Z"), ZoneId.of("Z"));
+		localTimeService = new LocalTimeService(capitalsRepository, serviceDST, clock);
+		when(capitalsRepository.getWinterUTC("asuncion")).thenReturn("-4");
+		when(capitalsRepository.getSummerUTC("asuncion")).thenReturn("-3");
+		when(capitalsRepository.isTimeChanged("asuncion")).thenReturn(true);
+		when(serviceDST.isDSTForSouthAmerica("-4", "asuncion")).thenReturn(true);
+		assertEquals("18:00:00 01/09/2020", localTimeService.getTimeForSouthAmericaCapital("asuncion"));
+	}	
 }

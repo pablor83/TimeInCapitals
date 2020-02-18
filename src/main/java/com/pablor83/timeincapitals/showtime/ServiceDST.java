@@ -36,10 +36,10 @@ public class ServiceDST {
 			LocalDate startSummerZoneSuva = YearMonth.of(YearMonth.now().getYear(), Month.NOVEMBER).atDay(1)
 					.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
-			boolean isSumerTimeSuva = localDateTime
-					.isAfter(LocalDateTime.of(startWinterZoneSuva, LocalTime.of(2, 0).minusSeconds(1)));
 			boolean isWinterTimeSuva = localDateTime
-					.isAfter(LocalDateTime.of(startSummerZoneSuva, LocalTime.of(2, 0).minusSeconds(1)));
+					.isAfter(LocalDateTime.of(startWinterZoneSuva, LocalTime.of(2, 0).minusSeconds(1)));
+			boolean isSumerTimeSuva = localDateTime
+					.isAfter(LocalDateTime.of(startSummerZoneSuva, LocalTime.of(2, 0).minusSeconds(1)));			
 
 			return (!isSumerTimeSuva && !isWinterTimeSuva) || (isSumerTimeSuva && isWinterTimeSuva);
 
@@ -53,19 +53,19 @@ public class ServiceDST {
 			LocalDate startSummerZoneWellingtonAndApia = YearMonth.of(YearMonth.now().getYear(), Month.SEPTEMBER)
 					.atEndOfMonth().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
 
-			if (capital.equals("wellington")) {
-				boolean isSumerTimeWellington = localDateTime.isAfter(
-						LocalDateTime.of(startWinterZoneWellingtonAndApia, LocalTime.of(2, 0).minusSeconds(1)));
+			if (capital.equals("wellington")) {				
 				boolean isWinterTimeWellington = localDateTime.isAfter(
+						LocalDateTime.of(startWinterZoneWellingtonAndApia, LocalTime.of(2, 0).minusSeconds(1)));
+				boolean isSumerTimeWellington = localDateTime.isAfter(
 						LocalDateTime.of(startSummerZoneWellingtonAndApia, LocalTime.of(2, 0).minusSeconds(1)));
 
 				return (isSumerTimeWellington && isWinterTimeWellington) || (isSumerTimeWellington && isWinterTimeWellington);
 			}
 
 			else {
-				boolean isSumerTimeApia = localDateTime.isAfter(
-						LocalDateTime.of(startWinterZoneWellingtonAndApia, LocalTime.of(3, 0).minusSeconds(1)));
 				boolean isWinterTimeApia = localDateTime.isAfter(
+						LocalDateTime.of(startWinterZoneWellingtonAndApia, LocalTime.of(3, 0).minusSeconds(1)));
+				boolean isSumerTimeApia = localDateTime.isAfter(
 						LocalDateTime.of(startSummerZoneWellingtonAndApia, LocalTime.of(3, 0).minusSeconds(1)));
 
 				return (!isSumerTimeApia && !isWinterTimeApia) || (isSumerTimeApia && isWinterTimeApia);
@@ -80,10 +80,10 @@ public class ServiceDST {
 			LocalDate startSummerZoneKingston = YearMonth.of(YearMonth.now().getYear(), Month.OCTOBER).atDay(1)
 					.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
-			boolean isSumerTimeKingston = localDateTime
-					.isAfter(LocalDateTime.of(startWinterZoneKingston, LocalTime.of(2, 0).minusSeconds(1)));
 			boolean isWinterTimeKingston = localDateTime
-					.isAfter(LocalDateTime.of(startSummerZoneKingston, LocalTime.of(2, 0).minusSeconds(1)));
+					.isAfter(LocalDateTime.of(startWinterZoneKingston, LocalTime.of(2, 0).minusSeconds(1)));
+			boolean isSumerTimeKingston = localDateTime
+					.isAfter(LocalDateTime.of(startSummerZoneKingston, LocalTime.of(2, 0).minusSeconds(1)));			
 
 			return (!isSumerTimeKingston && !isWinterTimeKingston) || (isSumerTimeKingston && isWinterTimeKingston);
 
@@ -96,10 +96,10 @@ public class ServiceDST {
 			LocalDate startSummerZoneAustralia = YearMonth.of(YearMonth.now().getYear(), Month.APRIL).atDay(1)
 					.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
-			boolean isSumerTimeAustralia = localDateTime
-					.isAfter(LocalDateTime.of(startWinterZoneAustralia, LocalTime.of(2, 0).minusSeconds(1)));
 			boolean isWinterTimeAustralia = localDateTime
-					.isAfter(LocalDateTime.of(startSummerZoneAustralia, LocalTime.of(2, 0).minusSeconds(1)));
+					.isAfter(LocalDateTime.of(startWinterZoneAustralia, LocalTime.of(2, 0).minusSeconds(1)));
+			boolean isSumerTimeAustralia = localDateTime
+					.isAfter(LocalDateTime.of(startSummerZoneAustralia, LocalTime.of(2, 0).minusSeconds(1)));			
 
 			return isSumerTimeAustralia && !isWinterTimeAustralia;
 
@@ -142,11 +142,10 @@ public class ServiceDST {
 			LocalDate startSummerZoneMexico = YearMonth.of(YearMonth.now().getYear(), Month.APRIL).atDay(1)
 					.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
-			boolean isSummerTimeMexico = localDateTime
-					.isAfter(LocalDateTime.of(startWinterZoneMexico, LocalTime.of(2, 0).minusSeconds(1)));
-
 			boolean isWinterTimeMexico = localDateTime
-					.isAfter(LocalDateTime.of(startSummerZoneMexico, LocalTime.of(2, 0).minusSeconds(1)));
+					.isAfter(LocalDateTime.of(startWinterZoneMexico, LocalTime.of(2, 0).minusSeconds(1)));
+			boolean isSummerTimeMexico = localDateTime
+					.isAfter(LocalDateTime.of(startSummerZoneMexico, LocalTime.of(2, 0).minusSeconds(1)));			
 
 			return isSummerTimeMexico && !isWinterTimeMexico;
 		}
@@ -182,25 +181,25 @@ public class ServiceDST {
 			LocalDate startSummerZoneSantiago = YearMonth.of(YearMonth.now().getYear(), Month.OCTOBER).atDay(1)
 					.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
-			boolean isSummerTimeSantiago = localDateTime
-					.isAfter(LocalDateTime.of(startWinterZoneSantiago, LocalTime.of(0, 0).minusSeconds(1)));
 			boolean isWinterTimeSantiago = localDateTime
-					.isAfter(LocalDateTime.of(startSummerZoneSantiago, LocalTime.of(0, 0).minusSeconds(1)));
+					.isAfter(LocalDateTime.of(startWinterZoneSantiago, LocalTime.of(0, 0).minusSeconds(1)));
+			boolean isSummerTimeSantiago = localDateTime
+					.isAfter(LocalDateTime.of(startSummerZoneSantiago, LocalTime.of(0, 0).minusSeconds(1)));			
 
-			return isSummerTimeSantiago && isWinterTimeSantiago;
+			return (!isSummerTimeSantiago && !isWinterTimeSantiago) || (isSummerTimeSantiago && isWinterTimeSantiago);
 		} else {
 			LocalDate startWinterZoneAsuncion = YearMonth.of(YearMonth.now().getYear(), Month.MARCH).atDay(1)
-					.with(TemporalAdjusters.dayOfWeekInMonth(4, DayOfWeek.SUNDAY)).minusDays(1);
+					.with(TemporalAdjusters.dayOfWeekInMonth(4, DayOfWeek.SUNDAY));
 
 			LocalDate startSummerZoneAsuncion = YearMonth.of(YearMonth.now().getYear(), Month.OCTOBER).atDay(1)
 					.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
 
-			boolean isSummerTimeAsuncion = localDateTime
-					.isAfter(LocalDateTime.of(startWinterZoneAsuncion, LocalTime.of(23, 0).minusSeconds(1)));
 			boolean isWinterTimeAsuncion = localDateTime
-					.isAfter(LocalDateTime.of(startSummerZoneAsuncion, LocalTime.of(0, 0).minusSeconds(1)));
+					.isAfter(LocalDateTime.of(startWinterZoneAsuncion, LocalTime.of(0, 0).minusSeconds(1)));
+			boolean isSummerTimeAsuncion = localDateTime
+					.isAfter(LocalDateTime.of(startSummerZoneAsuncion, LocalTime.of(0, 0).minusSeconds(1)));			
 
-			return isSummerTimeAsuncion && isWinterTimeAsuncion;
+			return (!isSummerTimeAsuncion && !isWinterTimeAsuncion) || (isSummerTimeAsuncion && isWinterTimeAsuncion);
 		}
 	}
 
