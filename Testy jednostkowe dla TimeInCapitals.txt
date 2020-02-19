@@ -1,0 +1,159 @@
+1.Sprawdzić czy w Londynie będzie 2 w nocy czasu letniego gdy w Warszasie będzie 2 czasu zimowego w dniu zmianu czasu na zimowy.
+
+Dane wejściowe - Warszawa 27.10.2019r. 02:00:00 +1 (czas zimowy)
+Oczekiwane dane wyjściowe - Londyn 27.10.2019r. 02:00:00 +1 (czas letni)
+
+2.Serwer w Londynie 27.10.2019r. 01:00:00 +0 (czas zimowy), czy w Warszawie będzie już czas letni godzina 3 w dniu zmianu czasu na zimowy..
+
+Dane wejściowe - Londyn 27.10.2019r. 01:00:00 +0 (czas zimowy)
+Oczekiwane dane wyjściowe - Warszawa 27.10.2019r. 03:00:00 +2 (czas letni)
+
+3.Sprawdzić czy w Warszawie wyświetli się godzina 2 w nocy UTC +1 w dniu zmianu czasu na zimowy.
+
+Dane wejściowe - Warszawa 27.10.2019r. 02:00:00 +1 (czas zimowy)
+Oczekiwane dane wyjściowe - Warszawa 27.10.2019r. 02:00:00 +1 (czas zimowy)
+
+4.Sprawdzić czy w Warszawie wyświetli się godzina 2 (czas zimowy), gdy na zegarze będzie godzina 3 czasu letniego w dniu zmianu czasu na zimowy. 
+
+Dane wejściowe - Warszawa 27.10.2019r. 03:00:00 +2 (czas letni)
+Oczekiwane dane wyjściowe - Warszawa 27.10.2019r. 02:00:00 +1 (czas zimowy)
+
+5.Sprawdzić czy Warszawie będzie 3 godzina 29.03.2020r. 02:00:00 +1 (czas zimowy) w dniu zmianu czasu na letni.
+
+Dane wejściowe - Warszawa 29.03.2020r. 02:00:00 +1 (czas zimowy)
+Ocekiwane dane wyjściowe - Warszawa 29.03.2020r. 03:00:00 +2 (czas letni)
+
+6.Sprawdzić czy Londyn będzie 2 godziny za Warszawą gdy Polsce będzie 29.03.2020r. 03:00:00 +2 (czas letni) w dniu zmianu czasu na letni.
+
+Dane wejściowe - Warszawa 29.03.2020r. 03:00:00 +2 (czas letni)
+Ocekiwane dane wyjściowe - Londyn 29.03.2020r. 01:00:00 +1 (czas zimowy)
+
+7.Sprawdzić czy uruchomienie serwera strefie czasowej +8 UTC będzie powodowało wyświetlanie poprawnego czasu dla Warszawy +1 UTC
+
+Dane wejściowe - Pekin 15.01.2020r. godz. 20:00 strefa czasowa +8 UTC
+Oczekiwane dane wyjściowe - Warszawa 15.01.2020r. godz. 13:00 strefa czasowa +1 UTC
+
+8.Sprawdzić czy uruchomienie serwera strefie czasowej +8 UTC będzie powodowało wyświetlanie poprawnego czasu dla Warszawy +2 UTC
+
+Dane wejściowe - Pekin 01.07.2020r. godz. 20:00 strefa czasowa +8 UTC
+Oczekiwane dane wyjściowe - Warszawa 01.07.2020r. godz. 14:00 strefa czasowa +2 UTC
+
+9.Sprawdzenie poprawności czasu dla ujemnego UTC względem Warszawy (czas zimowy).
+
+Dane wejściowe - Warszawa 02.01.2020r. godz. 20:00 strefa czasowa +1 UTC
+Oczekiwane dane wyjściowe - Ottawa 02.01.2020r. godz. 14:00:00 strefa czasowa -5 UTC
+
+10.Sprawdzenie poprawności czasu dla ujemnego UTC serwera,  Warszawy +1 (czas zimowy).
+
+Dane wejściowe - Ottawa 02.01.2020r. godz. 20:00 strefa czasowa -5 UTC
+Oczekiwane dane wyjściowe - Warszawa 03.01.2020r. godz. 02:00:00 strefa czasowa +1 UTC
+
+11.Sprawdzenie zmiany czasu z zimowego na letni w Ottawie, gdy Serwer jest w Warszawie i ma czas zimowy. W dniu zmianu czasu na letni w Ottawie.
+
+Dane wejściowe - Warszawa 08.03.2020r. godz. 08:00:00 UTC +1
+Oczekiwane dane wyjściowe - Ottawa 08.03.2020r. 03:00:00 UTC -4
+
+12.Sprawdzić wyświetlanie czasu dla Kabulu (UTC +04:30) wg przykładowego czasu zimowego w Warszawie
+
+Dane wejściowe - Warszawa 02.01.2020r. godz. 08:00:00 UTC +1
+Ocekiwane dane wyjściowe - Kabul 02.01.2020r. godz. 11:30:00
+
+13.Sprawdzić wyświetlanie czasu dla Kabulu (UTC +04:30) wg przykładowego czasu letniego w Warszawie
+
+Dane wejściowe - Warszawa 02.01.2020r. godz. 08:00:00 UTC +2
+Ocekiwane dane wyjściowe - Kabul 02.01.2020r. godz. 10:30:00
+
+14.Sprawdzić wyświetlanie czasu dla Warszawy (czas zimowy), podczas gdy serwer znajduje się w strefie czasowej Kabulu
+
+Dane wejściowe - Kabul 02.01.2020r. godz. 10:00:00 UTC +04:30
+Ocekiwane dane wyjściowe - Warszawa 02.01.2020r. godz. 07:30:00
+
+15.Sprawdzić wyświetlanie czasu dla Warszawy (czas letni), podczas gdy serwer znajduje się w strefie czasowej Kabulu
+
+Dane wejściowe - Kabul 02.01.2020r. godz. 10:00:00 UTC +04:30
+Ocekiwane dane wyjściowe - Warszawa 02.01.2020r. godz. 08:30:00
+
+16.Serwer w Warszawie, sprawdzić czy w dniu zmiany czasu na zimowy dla Warszawy godz. 01:00 w nocy (czas letni UTC +2), czas dla Mińska będzie wyświetlany poprawnie (Mińsk brak czasu letniego) //Test ma sprawdzić, czy gdy w Mińsku będzie godzinia 2 w nocy, podawany dla niego czas, nie zmieni się o godzinę do tyłu, jak to ma miejsce dla krajów z europy posiadających czas letni
+
+Dane wejściowe - Warszawa 27.10.2019r. godz. 01:00:00 UTC +2
+Ocekiwane dane wyjściowe - Mińsk 27.10.2019r. godz. 02:00:00 UTC +3
+
+17.Serwer w Warszawie, sprawdzić czy w dniu zmiany czasu na zimowy dla Warszawy godz. 02:00 w nocy (czas zimowy UTC +1), czas dla Mińska będzie wyświetlany poprawnie (Mińsk brak czasu letniego) //Test ma sprawdzić, czy gdy w Mińsku będzie godzinia 2 w nocy, podawany dla niego czas, nie zmieni się o godzinę do tyłu, jak to ma miejsce dla krajów z europy posiadających czas letni
+
+Dane wejściowe - Warszawa 27.10.2019r. godz. 02:00:00 UTC +1
+Ocekiwane dane wyjściowe - Mińsk 27.10.2019r. godz. 04:00:00 UTC +3
+
+18.Serwer w Warszawie, sprawdzić czy w dniu zmiany czasu na letni dla Warszawy godz. 03:00 w nocy (czas letni UTC +2), czas dla Mińska będzie wyświetlany poprawnie (Mińsk brak czasu letniego) //Test ma sprawdzić, czy gdy w Mińsku będzie godzinia 2 w nocy, podawany dla niego czas, nie zmieni się o godzinę do przodu, jak to ma miejsce dla krajów z europy posiadających czas letni
+
+Dane wejściowe - Warszawa 29.03.2019r. godz. 03:00:00 UTC +2
+Ocekiwane dane wyjściowe - Mińsk 27.10.2019r. godz. 05:00:00 UTC +3
+
+19.Serwer w Warszawie, sprawdzić czy w dniu zmiany czasu na letni dla Warszawy godz. 00:00 w nocy (czas zimowy UTC +1), czas dla Mińska będzie wyświetlany poprawnie (Mińsk brak czasu letniego) //Test ma sprawdzić, czy gdy w Mińsku będzie godzinia 2 w nocy, podawany dla niego czas, nie zmieni się o godzinę do przodu, jak to ma miejsce dla krajów z europy posiadających czas letni
+
+Dane wejściowe - Warszawa 29.03.2019r. godz. 00:00:00 UTC +1
+Ocekiwane dane wyjściowe - Mińsk 27.10.2019r. godz. 02:00:00 UTC +3
+
+20.Sprawdzić czy poprawnie jest zmieniany czas na zimowy dla Meksyku, serwer w Warszasie UTC +1
+
+Dane wejściowe - Warszawa 27.10.2019r. 09:00:00 UTC +1
+Oczekiwane dane wyjściowe - Meksyk 27.10.2019r. 02:00:00 UTC -6
+
+20.Sprawdzić czy poprawnie jest zmieniany czas na letni dla Meksyku, serwer w Warszasie UTC +2
+
+Dane wejściowe - Warszawa 05.04.2020r. 10:00:00 UTC +2
+Oczekiwane dane wyjściowe - Meksyk 05.04.2020r. 03:00:00 UTC -5
+
+21.Sprawdzić czy poprawnie jest wyświetlany czas dla Meksyku gdy Warszawa już przeszła na czas letni, a Meksyk jest przed zmianą
+
+Dane wejściowe - Warszawa 01.04.2020r. 12:00:00 UTC +2
+Oczekiwane dane wyjściowe - Meksyk 01.10.2019r. 04:00:00 UTC -6
+
+22.Sprawdzić czy poprawnie jest wyświetlany czas zimowy dla Autralii, serwer w Australii
+
+Dane wejściowe - Canberra 06.10.2019r. 02:00:00 UTC +10
+Oczekiwane dane - Canberra 06.10.2019r. 02:00:00 UTC +10
+
+23.Sprawdzić czy poprawnie jest wyświetlany czas letni dla Autralii, serwer w Australii
+
+Dane wejściowe - Canberra 05.04.2019r. 02:00:00 UTC +10
+Oczekiwane dane - Canberra 05.04.2019r. 03:00:00 UTC +11
+
+24.Sprawdzić czy poprawnie jest wyświetlany czas zimowy dla Fidżi, serwer w Fidżi
+
+Dane wejściowe - Suva 12.01.2020r. 02:00:00 UTC +12
+Oczekiwane dane - Suva 12.01.2020r. 02:00:00 UTC +12
+
+25.Sprawdzić czy poprawnie jest wyświetlany czas letni dla Fidżi, serwer w Fidżi
+
+Dane wejściowe - Suva 01.11.2020 02:00:00 UTC +12
+Oczekiwane dane - Suva 01.11.2020 03:00:00 UTC +13
+
+26.Sprawdzić czy poprawnie jest wyświetlany czas zimowy dla Nowej Zelandii, serwer w Nowej Zelandi
+
+Dane wejściowe - Wellington 05.04.2020r. 02:00:00 UTC +12
+Oczekiwane dane - Wellington 05.04.2020r. 02:00:00 UTC +12
+
+27.Sprawdzić czy poprawnie jest wyświetlany czas letni dla Nowej Zelandii, serwer w Nowej Zelandii
+
+Dane wejściowe - Wellington 27.09.2020r. 02:00:00 UTC +12
+Oczekiwane dane - Wellington 27.09.2020r. 03:00:00 UTC +13
+
+28.Sprawdzić czy poprawnie jest wyświetlany czas zimowy dla Samoa, serwer w Samoa
+
+Dane wejściowe - Apia 05.04.2020r. 03:00:00 UTC +13
+Oczekiwane dane - Apia 05.04.2020r. 03:00:00 UTC +13
+
+29.Sprawdzić czy poprawnie jest wyświetlany czas letni dla Samoa, serwer w Samoa
+
+Dane wejściowe - Apia 27.09.2020r. 03:00:00 UTC +13
+Oczekiwane dane - Apia 27.09.2020r. 04:00:00 UTC +14
+
+30.Sprawdzić czy poprawnie jest wyświetlany czas zimowy dla Norfolk, serwer w Norfolk
+
+Dane wejściowe - Kingston 05.04.2020r. 02:00:00 UTC +11
+Oczekiwane dane - Kingston 05.04.2020r. 02:00:00 UTC +11
+
+31.Sprawdzić czy poprawnie jest wyświetlany czas letni dla Norfolk, serwer w Norfolk
+
+Dane wejściowe - Kingston 04.10.2020r. 02:00:00 UTC +11
+Oczekiwane dane - Kingston 04.10.2020r. 03:00:00 UTC +12
