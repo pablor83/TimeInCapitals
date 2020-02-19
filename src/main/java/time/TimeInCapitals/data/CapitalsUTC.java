@@ -1,20 +1,19 @@
 package time.TimeInCapitals.data;
 
-public class EuropeCapitalsUTC {
+public class CapitalsUTC {
 
 	private String country;
 	private String capital;
 	private String summerTime;
 	private String winterTime;
-	private boolean timeChanged;
+	private String continent;
 
-	public EuropeCapitalsUTC(String country, String capital, String summerTime, String winterTime,
-			boolean isTimeChanged) {
+	public CapitalsUTC(String country, String capital, String summerTime, String winterTime, String continent) {
 		this.country = country;
 		this.capital = capital;
 		this.summerTime = summerTime;
 		this.winterTime = winterTime;
-		this.timeChanged = isTimeChanged;
+		this.continent = continent;
 	}
 
 	public String getCountry() {
@@ -33,7 +32,7 @@ public class EuropeCapitalsUTC {
 		return winterTime;
 	}
 
-	public boolean isTimeChanged() {
-		return timeChanged;
-	}	
+	public String getContinent() {
+		return continent;
+	}
 }

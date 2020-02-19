@@ -1,0 +1,13 @@
+argentina buenos_aires no -3 south_america 
+bolivia la_paz no -4 south_america 
+brazil brasilia no -3 south_america 
+chile santiago -3 -4 south_america 
+ecuador quito no -5 south_america 
+guyana georgetown no -4 south_america 
+colombia bogota no -5 south_america 
+paraguay asuncion -3 -4 south_america 
+peru lima no -5 south_america 
+suriname paramaribo no -3 south_america 
+trinidad_and_tobago port-of-spain no -4 south_america 
+uruguay montevideo no -3 south_america 
+venezuela caracas no -4 south_america

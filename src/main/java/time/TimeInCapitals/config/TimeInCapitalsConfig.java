@@ -3,6 +3,8 @@ package time.TimeInCapitals.config;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Clock;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -10,55 +12,62 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 
 import time.TimeInCapitals.data.CapitalsData;
-import time.TimeInCapitals.data.EuropeCapitalsUTC;
+import time.TimeInCapitals.data.CapitalsUTC;
 
 @Configuration
-@PropertySource("classpath:pathToTheEuropaFile.properties")
+@PropertySource("classpath:files-paths.properties")
 public class TimeInCapitalsConfig {
 
 	private final int COUNTRY = 0;
 	private final int CAPITAL = 1;
 	private final int SUMMER_TIME = 2;
 	private final int WINTER_TIME = 3;
-	private final int IS_TIME_CHANGED = 4;
+	private final int CONTINENT = 4;
+	
+	@Bean
+	public Clock getClock() {
+		return Clock.systemUTC();
+	}
 
-	@Bean(name = "getCapitalsData")
-	public CapitalsData getDataFromFile(@Value("${source.pathToEurope}") String pathToEurope) {
+	@Bean
+	public CapitalsData getDataFromFile(
+			@Value("${source.africa}") String pathToAfrica,
+			@Value("${source.asia}") String pathToAsia,
+			@Value("${source.australia}") String pathToAustralia,
+			@Value("${source.europe}") String pathToEurope,
+			@Value("${source.northAmerica}") String pathToNorthAmerica,
+			@Value("${source.southAmerica}") String pathToSouthAmerica) {
 
-		List<String> textFromFile = null;
+		List<String> textFromFile = new ArrayList<>();
 
 		try {
-			textFromFile = Files.readAllLines(Path.of(pathToEurope));
+			textFromFile.addAll(Files.readAllLines(Path.of(pathToAfrica)));
+			textFromFile.addAll(Files.readAllLines(Path.of(pathToAsia)));
+			textFromFile.addAll(Files.readAllLines(Path.of(pathToAustralia)));
+			textFromFile.addAll(Files.readAllLines(Path.of(pathToEurope)));
+			textFromFile.addAll(Files.readAllLines(Path.of(pathToNorthAmerica)));
+			textFromFile.addAll(Files.readAllLines(Path.of(pathToSouthAmerica)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		Map<String, EuropeCapitalsUTC> europeUTC = textFromFile
+		Map<String, CapitalsUTC> capitalsUTC = textFromFile
 				.stream()
-				.map(this::getUTCForEuropeCapitals)
-				.collect(Collectors.toMap(EuropeCapitalsUTC::getCapital, europeCapitalsUTC -> europeCapitalsUTC));
+				.map(this::getUTCForCapitals)
+				.collect(Collectors.toMap(CapitalsUTC::getCapital, europeCapitalsUTC -> europeCapitalsUTC));
 
-		return new CapitalsData(europeUTC);
+		return new CapitalsData(capitalsUTC);
 	}
 
-	private EuropeCapitalsUTC getUTCForEuropeCapitals(String dataLines) {
+	private CapitalsUTC getUTCForCapitals(String dataLines) {
 
 		String[] dataFromFile = dataLines.split(" ");
-
-		return new EuropeCapitalsUTC(dataFromFile[COUNTRY], dataFromFile[CAPITAL], dataFromFile[SUMMER_TIME],
-				dataFromFile[WINTER_TIME], toTimeChanged(dataFromFile[IS_TIME_CHANGED]));
-	}
-
-	private boolean toTimeChanged(String isTimeChanged) {
 		
-		if(isTimeChanged.equals("yes"))
-			return true;
-		else if (isTimeChanged.equals("no"))
-			return false;
-		else
-			throw new IllegalArgumentException("Wrong argument, only \"yes\" or \"no\"");
+		return new CapitalsUTC(dataFromFile[COUNTRY], dataFromFile[CAPITAL], dataFromFile[SUMMER_TIME],
+				dataFromFile[WINTER_TIME], dataFromFile[CONTINENT]);
 	}
 }

@@ -4,17 +4,21 @@ import java.util.Map;
 
 public class CapitalsData {
 
-	private Map<String, EuropeCapitalsUTC> europeUTC;
+	private Map<String, CapitalsUTC> capitalsUTC;
 
-	public CapitalsData(Map<String, EuropeCapitalsUTC> europeUTC) {
-		this.europeUTC = europeUTC;
+	public CapitalsData(Map<String, CapitalsUTC> capitalUTC) {
+		this.capitalsUTC = capitalUTC;
+	}
+	
+	public String getContinentName(String capital) {
+		return capitalsUTC.get(capital).getContinent();
 	}
 
-	public EuropeCapitalsUTC getEuropeDataUTC(String capital) {
-		return europeUTC.get(capital);
+	public CapitalsUTC getCapitalUTC(String capital) {
+		return capitalsUTC.get(capital);
 	}
 
 	public boolean existsByKey(String key) {
-		return europeUTC.containsKey(key);
+		return capitalsUTC.containsKey(key);
 	}
 }
